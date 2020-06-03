@@ -9,11 +9,43 @@ public class hEntrance : MonoBehaviour
     public event DelEntrance enterEvent;
     [SerializeField]
     private LayerMask m_PlayerLayer;
+    [SerializeField]
+    private MapType m_NextMapType;
 
     [SerializeField]
     private int m_Id;
+    [SerializeField]
+    private Light m_Light;
 
-    public int id { get => m_Id; }
+    public int id { get => m_Id; set => m_Id = value; }
+    public MapType nextMapType { get => m_NextMapType; set => m_NextMapType = value; }
+
+    private void Awake()
+    {
+        SetType(m_NextMapType);
+    }
+
+    public void SetType(MapType inType)
+    {
+        m_NextMapType = inType;
+        Color lightColor = Color.white;
+        switch (m_NextMapType)
+        {
+            case MapType.NORMAL:
+                lightColor = Color.white;
+                break;
+            case MapType.ELITE:
+                lightColor = Color.cyan;
+                break;
+            case MapType.BOSS:
+                lightColor = Color.red;
+                break;
+            case MapType.BONUS:
+                lightColor = Color.yellow;
+                break;
+        }
+        m_Light.color = lightColor;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,4 +54,11 @@ public class hEntrance : MonoBehaviour
             enterEvent?.Invoke(this);
         }
     }
+
+    private void OnMouseDown()
+    {
+        enterEvent?.Invoke(this);
+    }
+
+
 }

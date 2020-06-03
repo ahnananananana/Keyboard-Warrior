@@ -23,9 +23,4 @@ public class hMapDatabase : ScriptableObject
 
         return default;
     }
-
-    private void OnDisable()
-    {
-        
-    }
 }
