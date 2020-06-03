@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+
+
     protected float m_HP;
     protected float m_MP;
 
@@ -24,6 +26,7 @@ public class Character : MonoBehaviour
     protected float m_MoveSpeed;
     protected float m_EXP;
     protected float m_Level;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -37,10 +40,7 @@ public class Character : MonoBehaviour
 
     }
 
-    protected void SetStats()
-    {
-        
-    }
+    
 
     public void Move()
     {
