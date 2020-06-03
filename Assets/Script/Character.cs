@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private float m_HP;
-    private float m_MP;
 
-    //순서대로 물리공격력, 마법공격력, 물리방어, 마법방어
-    private float m_PhysicalAtk;
-    private float m_MagicAtk;
-    private float m_Defense;
-    private float m_Resistance;
-    
+
+    protected float m_HP;
+    protected float m_MP;
+
+    //순서대로 힘, 마법, 물리공격력, 마법공격력, 물리방어, 마법방어
+    protected float m_Strength;
+    protected float m_Magic;
+    protected float m_PhysicalAtk;
+    protected float m_MagicAtk;
+    protected float m_Defense;
+    protected float m_Resistance;
+
     //순서대로 회피, 적중률, 크리확률, 크리배수
-    private float m_Evade;
-    private float m_Accuracy;
-    private float m_CritChance;
-    private float m_CritMultiplier;
+    protected float m_Evade;
+    protected float m_Accuracy;
+    protected float m_CritChance;
+    protected float m_CritMultiplier;
 
-    private float m_MoveSpeed;
-    private float m_EXP;
-    private float m_Level;
+    protected float m_MoveSpeed;
+    protected float m_EXP;
+    protected float m_Level;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +37,28 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    
+
+    public void Move()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+
+        }
     }
 }
