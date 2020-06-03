@@ -30,10 +30,11 @@ public class hMapManager : MonoBehaviour
     }
 
     //맵씬 로드 후 맵 로드
-    public void LoadMap(int inMapId, bool inIsBoss = false)
+    public void LoadMap(int inMapId, List<Character> inMonsterList = null, bool inIsBoss = false)
     {
         m_CurMap = Instantiate(m_MapDatabase.GetMap(inMapId));
         m_CurMap.enterEvent += EnterEntrance;
+
         for (int i = 0; i < m_CurMap.entranceList.Length; ++i)
         {
             if(inIsBoss)
@@ -46,6 +47,9 @@ public class hMapManager : MonoBehaviour
                 m_CurMap.entranceList[i].SetType(type);
             }
         }
+
+        if(inMonsterList != null)
+            m_CurMap.SetSpawnMonter(inMonsterList);
     }
 
     private void EnterEntrance(hEntrance inEntrance)
@@ -54,6 +58,7 @@ public class hMapManager : MonoBehaviour
         m_CurMap.SetType(inEntrance.nextMapType);
         //해당 출입구 id를 가지고 다음 맵을 선택
         //먼저 로딩씬으로 전환 후 다음 맵 로딩 후 전환
+        //levelmanager에게 해당 leveldata 요청
     }
 
     private void Update()
