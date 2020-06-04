@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    private float _loadingProgress = 0f;
+    /*private float _loadingProgress = 0f;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     IEnumerator SceneLoading(int i)
     {
-        yield return SceneManager.LoadSceneAsync("Loading");
+        //yield return SceneManager.LoadSceneAsync("Loading");
         yield return null;
         StartCoroutine(LoadScene(i));
     }
@@ -43,5 +43,5 @@ public class SceneLoader : Singleton<SceneLoader>
             }
             yield return null;
         }
-    }
+    }*/
 }

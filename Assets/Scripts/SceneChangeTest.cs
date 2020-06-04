@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SceneChangeTest : Singleton<SceneChangeTest>
 {
-    private void Awake()
+    /*private void Awake()
     {
         if(_instance == null)
             _instance = this;
@@ -25,5 +25,5 @@ public class SceneChangeTest : Singleton<SceneChangeTest>
                     break;
             }
         }
-    }
+    }*/
 }

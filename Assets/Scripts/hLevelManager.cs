@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class hLevelManager : MonoBehaviour
 {
-    private int m_CurLevel;
+    [SerializeField]
+    private hLevelData[] m_LevelDataList;
 
+    public hLevelData LoadLevel(int inLevel)
+    {
 
+        return m_LevelDataList[inLevel];
+    }
 }

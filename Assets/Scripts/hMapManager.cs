@@ -15,7 +15,9 @@ public class hMapManager : MonoBehaviour
 {
     [SerializeField]
     private hMapDatabase m_MapDatabase;
-    public hMap m_CurMap;
+    private hMap m_CurMap;
+    [SerializeField]
+    private Transform m_MapPos;
 
     private void Awake()
     {
@@ -32,7 +34,10 @@ public class hMapManager : MonoBehaviour
     //맵씬 로드 후 맵 로드
     public void LoadMap(int inMapId, List<Character> inMonsterList = null, bool inIsBoss = false)
     {
-        m_CurMap = Instantiate(m_MapDatabase.GetMap(inMapId));
+        m_CurMap = Instantiate(m_MapDatabase.GetMap(inMapId), m_MapPos);
+        m_CurMap.transform.localScale = Vector3.one;
+        m_CurMap.transform.localPosition = Vector3.zero;
+
         m_CurMap.enterEvent += EnterEntrance;
 
         for (int i = 0; i < m_CurMap.entranceList.Length; ++i)
