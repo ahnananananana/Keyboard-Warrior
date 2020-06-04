@@ -12,21 +12,14 @@ public class StatBase : MonoBehaviour
     //퍼센트로 증감하는 버프를 위해 만든 멤버변수
     private float m_BaseMultiplier;
 
+    public float BaseValue { get => m_BaseValue; set => m_BaseValue = value; }
+    public float BaseMultiplier { get => m_BaseMultiplier; set => m_BaseMultiplier = value; }
+
     //초기화를 위한 함수(생성자와 같은 기능)
     public void SetStat(float value, float multiplier = 0)
     {
-        m_BaseValue = value;
-        m_BaseMultiplier = multiplier;
+        BaseValue = value;
+        BaseMultiplier = multiplier;
     }
 
-    //아래 두 개는 get 함수
-    public float GetBaseValue()
-    {
-        return m_BaseValue;
-    }
-
-    public float GetBaseMultiplier()
-    {
-        return m_BaseMultiplier;
-    }
 }
