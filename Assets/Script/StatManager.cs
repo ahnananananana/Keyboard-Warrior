@@ -10,7 +10,7 @@ public class StatManager : StatBase
     protected List<FinalBuff> L_FinalBuffs = new List<FinalBuff>();
 
     //스텟값을 직접 건드리지 않기 위해 선언하는, temp 기능을 하는 멤버변수
-    protected float m_FinalValue;
+    private float m_FinalValue;
     
     //위에 선언한 List에 버프를 담는 함수
     public void AddRawBuff(RawBuff buff)
@@ -74,11 +74,11 @@ public class StatManager : StatBase
         m_FinalValue *= (1 + FinalBuffMultiplier);
     }
 
-    //m_FinalValue를 get하는 함수
     public float GetFinalValue()
     {
         return m_FinalValue;
     }
+    
 
     //추가해야 할 것 : 포션이나 피격 등으로 체력, 마나 등 증감시키는 함수 -> 이것도 그냥 있는 함수로 쓸까?
 }
