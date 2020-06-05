@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //기본 스텟이 상속받을 클래스
-public class StatBase : MonoBehaviour
+public class StatBase
 {
     //기본값이 될 수도, 더해지는 값이 될 수도
     //예를 들면 이 클래스를 스텟이 상속 받으면 힘 = 10이 되는 거고, 버프가 상속 받으면 힘 +10이 되는 구조

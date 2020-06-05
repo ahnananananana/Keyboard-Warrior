@@ -27,25 +27,25 @@ public class Character : MonoBehaviour
     private EXP eXP;
     private Level level;
 
-    public MaxHP MaxHP { get => maxHP;}
-    public MaxMP MaxMP { get => maxMP;}
-    public HP HP { get => hP;}
-    public MP MP { get => mP;}
-    public Strength Strength { get => strength;}
-    public Magic Magic { get => magic;}
-    public PhysicalAtk PhysicalAtk { get => physicalAtk;}
-    public MagicAtk MagicAtk { get => magicAtk;}
-    public Defense Defense { get => defense;}
-    public Resistance Resistance { get => resistance;}
-    public Evade Evade { get => evade;}
-    public Accuracy Accuracy { get => accuracy;}
-    public CritChance CritChance { get => critChance;}
-    public CritMultiplier CritMultiplier { get => critMultiplier;}
-    public MoveSpeed MoveSpeed { get => moveSpeed;}
-    public EXP EXP { get => eXP;}
-    public Level Level { get => level;}
+    public MaxHP MaxHP { get => maxHP; }
+    public MaxMP MaxMP { get => maxMP; }
+    public HP HP { get => hP; }
+    public MP MP { get => mP; }
+    public Strength Strength { get => strength; }
+    public Magic Magic { get => magic; }
+    public PhysicalAtk PhysicalAtk { get => physicalAtk; }
+    public MagicAtk MagicAtk { get => magicAtk; }
+    public Defense Defense { get => defense; }
+    public Resistance Resistance { get => resistance; }
+    public Evade Evade { get => evade; }
+    public Accuracy Accuracy { get => accuracy; }
+    public CritChance CritChance { get => critChance; }
+    public CritMultiplier CritMultiplier { get => critMultiplier; }
+    public MoveSpeed MoveSpeed { get => moveSpeed; }
+    public EXP EXP { get => eXP; }
+    public Level Level { get => level; }
 
-    protected void InitializeBaseValue
+    public void InitializeBaseValue
         (float maxhp, float maxmp,
         float str, float mag, float physatk, float magatk, float def, float res,
         float eva, float acc, float critchance, float critmult,
@@ -75,6 +75,31 @@ public class Character : MonoBehaviour
         defender.HP.FinalValue -= (attacker.PhysicalAtk.FinalValue - defender.Defense.FinalValue);
     }
 
+    private void Awake()
+    {
+        maxHP = new MaxHP();
+        maxMP = new MaxMP();
+        hP = new HP();
+        mP = new MP();
+
+        //순서대로 힘, 마법, 물리공격력, 마법공격력, 물리방어, 마법방어
+        strength = new Strength();
+        magic = new Magic();
+        physicalAtk = new PhysicalAtk();
+        magicAtk = new MagicAtk();
+        defense = new Defense();
+        resistance = new Resistance();
+
+        //순서대로 회피, 적중률, 크리확률, 크리배수
+        evade = new Evade();
+        accuracy = new Accuracy();
+        critChance = new CritChance();
+        critMultiplier = new CritMultiplier();
+
+        moveSpeed = new MoveSpeed();
+        eXP = new EXP();
+        level = new Level();
+    }
 
     // Start is called before the first frame update
     void Start()
