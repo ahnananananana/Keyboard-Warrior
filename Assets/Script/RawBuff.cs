@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RawBuff : Buff
+public class RawBuff : Stat
 {
     
 }
