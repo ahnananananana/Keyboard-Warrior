@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    private RawBuff m_RawBuff;
+    private FinalBuff m_FinalBuff;
+
     private MaxHP maxHP;
     private MaxMP maxMP;
     private HP hP;
@@ -44,8 +47,10 @@ public class Character : MonoBehaviour
     public MoveSpeed MoveSpeed { get => moveSpeed;}
     public EXP EXP { get => eXP;}
     public Level Level { get => level;}
+    public RawBuff RawBuff { get => m_RawBuff; set => m_RawBuff = value; }
+    public FinalBuff FinalBuff { get => m_FinalBuff; set => m_FinalBuff = value; }
 
-    protected void InitializeBaseValue
+    public void InitializeBaseValue
         (float maxhp, float maxmp,
         float str, float mag, float physatk, float magatk, float def, float res,
         float eva, float acc, float critchance, float critmult,
@@ -79,7 +84,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame

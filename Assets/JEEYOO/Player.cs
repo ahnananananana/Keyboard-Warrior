@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Player : Character
 {
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +17,5 @@ public class Item : MonoBehaviour
     {
         
     }
+    
 }
