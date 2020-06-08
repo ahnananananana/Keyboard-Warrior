@@ -12,7 +12,7 @@ public class Stat : StatBase
     //스텟값을 직접 건드리지 않기 위해 선언하는, temp 기능을 하는 멤버변수
     private float m_FinalValue;
 
-    public float FinalValue { get => m_FinalValue + BaseValue; set => m_FinalValue = value; }
+    public float FinalValue { get => m_FinalValue; set => m_FinalValue = value; }
 
     //위에 선언한 List에 버프를 담는 함수
     public void AddRawBuff(RawBuff buff)

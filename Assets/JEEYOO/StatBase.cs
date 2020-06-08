@@ -12,8 +12,8 @@ public class StatBase
     //퍼센트로 증감하는 버프를 위해 만든 멤버변수
     private float m_BaseMultiplier = 0;
 
-    public float BaseValue { get => m_BaseValue; set => m_BaseValue = value; }
-    public float BaseMultiplier { get => m_BaseMultiplier; set => m_BaseMultiplier = value; }
+    public virtual float BaseValue { get => m_BaseValue; set => m_BaseValue = value; }
+    public virtual float BaseMultiplier { get => m_BaseMultiplier; set => m_BaseMultiplier = value; }
 
     //초기화를 위한 함수(생성자와 같은 기능)
     public void SetStat(float value, float multiplier = 0)
