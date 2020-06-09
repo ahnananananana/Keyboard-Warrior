@@ -53,7 +53,7 @@ public class Character : MonoBehaviour
     {
         MaxHP.BaseValue = maxhp;
         MaxMP.BaseValue = maxmp;
-        HP.BaseValue = MaxHP.BaseValue;
+        HP.BaseValue = MaxHP.BaseValue / 2f;
         MP.BaseValue = MaxMP.BaseValue;
         Strength.BaseValue = str;
         Magic.BaseValue = mag;

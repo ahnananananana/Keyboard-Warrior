@@ -17,7 +17,7 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player.Magic.BaseValue = 10;
-            player.Magic.AddRawBuff(player.RawBuff.add10);
+            //player.Magic.AddRawBuff(player.RawBuff.add10);
             Debug.Log(player.Magic.FinalValue);
         }
     }
