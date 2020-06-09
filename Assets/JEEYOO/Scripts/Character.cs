@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private MaxHP maxHP;
-    private MaxMP maxMP;
-    private HP hP;
-    private MP mP;
+    private MaxHP maxHP = new MaxHP();
+    private MaxMP maxMP = new MaxMP();
+    private HP hP = new HP();
+    private MP mP = new MP();
 
     //순서대로 힘, 마법, 물리공격력, 마법공격력, 물리방어, 마법방어
-    private Strength strength;
-    private Magic magic;
-    private PhysicalAtk physicalAtk;
-    private MagicAtk magicAtk;
-    private Defense defense;
-    private Resistance resistance;
+    private Strength strength = new Strength();
+    private Magic magic = new Magic();
+    private PhysicalAtk physicalAtk = new PhysicalAtk();
+    private MagicAtk magicAtk = new MagicAtk();
+    private Defense defense = new Defense();
+    private Resistance resistance = new Resistance();
 
     //순서대로 회피, 적중률, 크리확률, 크리배수
-    private Evade evade;
-    private Accuracy accuracy;
-    private CritChance critChance;
-    private CritMultiplier critMultiplier;
+    private Evade evade = new Evade();
+    private Accuracy accuracy = new Accuracy();
+    private CritChance critChance = new CritChance();
+    private CritMultiplier critMultiplier = new CritMultiplier();
 
-    private MoveSpeed moveSpeed;
-    private EXP eXP;
-    private Level level;
+    private MoveSpeed moveSpeed = new MoveSpeed();
+    private EXP eXP = new EXP();
+    private Level level = new Level();
 
     public MaxHP MaxHP { get => maxHP; }
     public MaxMP MaxMP { get => maxMP; }
@@ -75,36 +75,12 @@ public class Character : MonoBehaviour
         defender.HP.FinalValue -= (attacker.PhysicalAtk.FinalValue - defender.Defense.FinalValue);
     }
 
-    private void Awake()
-    {
-        maxHP = new MaxHP();
-        maxMP = new MaxMP();
-        hP = new HP();
-        mP = new MP();
-
-        //순서대로 힘, 마법, 물리공격력, 마법공격력, 물리방어, 마법방어
-        strength = new Strength();
-        magic = new Magic();
-        physicalAtk = new PhysicalAtk();
-        magicAtk = new MagicAtk();
-        defense = new Defense();
-        resistance = new Resistance();
-
-        //순서대로 회피, 적중률, 크리확률, 크리배수
-        evade = new Evade();
-        accuracy = new Accuracy();
-        critChance = new CritChance();
-        critMultiplier = new CritMultiplier();
-
-        moveSpeed = new MoveSpeed();
-        eXP = new EXP();
-        level = new Level();
-    }
+    
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
