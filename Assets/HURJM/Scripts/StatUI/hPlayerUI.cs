@@ -20,6 +20,11 @@ public class hPlayerUI : MonoBehaviour
         m_BattleWindow.Init(m_Player);
     }
 
+    public void Init(Player inPlayer)
+    {
+        m_Player = m_Player;
+    }
+
     public void ShowStatWindow()
     {
         if (!m_StatWindow.isActive)
@@ -39,5 +44,8 @@ public class hPlayerUI : MonoBehaviour
         }
 
     }
+
+    public void RefreshUI()
+    { }
 
 }

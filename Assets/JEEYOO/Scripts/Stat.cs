@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void DelVoid();
 //버프가 적용 된 스텟을 산출하기 위한 클래스. 스텟이 상속 받음
 public class Stat : StatBase
 {
+    public event DelVoid changeEvent;
     //여러 버프를 담을 수 있는 List생성.
     private List<RawBuff> L_RawBuffs = new List<RawBuff>();
     private List<FinalBuff> L_FinalBuffs = new List<FinalBuff>();
@@ -80,6 +82,8 @@ public class Stat : StatBase
 
         FinalValue += FinalBuffValue;
         FinalValue *= (1 + FinalBuffMultiplier);
+
+        changeEvent?.Invoke();
     }
 
     //경험치, 레벨 증감 / 포션으로 인한 체력/마나 증감 구현용
