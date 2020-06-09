@@ -14,34 +14,46 @@ public class Stat : StatBase
 
     public float FinalValue { get => m_FinalValue; set => m_FinalValue = value; }
 
+    public bool isRawEmpty()
+    {
+        if (L_RawBuffs.Count > 0) return false;
+        else return true;
+    }
+
+    public bool isFinalEmpty()
+    {
+        if (L_FinalBuffs.Count > 0) return false;
+        else return true;
+    }
+
     //위에 선언한 List에 버프를 담는 함수
     public void AddRawBuff(RawBuff buff)
     {
         L_RawBuffs.Add(buff);
-        RefreshRawBuff();
+        RefreshBuff();
     }
 
     public void AddFinalBuff(FinalBuff buff)
     {
         L_FinalBuffs.Add(buff);
-        RefreshFinalBuff();
+        RefreshBuff();
     }
 
     //버프가 해제될 때 List에서 해당 버프를 제거하기 위한 함수
     public void RemoveRawBuff(RawBuff buff)
     {
         L_RawBuffs.Remove(buff);
-        RefreshRawBuff();
+        RefreshBuff();
     }
 
     public void RemoveFinalBuff(FinalBuff buff)
     {
         L_FinalBuffs.Remove(buff);
-        RefreshFinalBuff();
+        RefreshBuff();
     }
 
     //RawBuff를 갱신하는 함수
-    public void RefreshRawBuff()
+    public void RefreshBuff()
     {
         FinalValue = BaseValue;
 
@@ -56,13 +68,7 @@ public class Stat : StatBase
 
         FinalValue += RawBuffValue;
         FinalValue *= (1 + RawBuffMultiplier);
-    }
-
-    //FinalBuff를 갱신하는 함수
-    public void RefreshFinalBuff()
-    {
-        FinalValue = BaseValue;
-
+   
         float FinalBuffValue = 0;
         float FinalBuffMultiplier = 0;
 

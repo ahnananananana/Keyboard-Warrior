@@ -27,10 +27,6 @@ public class Character : MonoBehaviour
     private EXP eXP = new EXP();
     private Level level = new Level();
 
-    private RawBuff add10 = new RawBuff(10, 0);
-    
-
-
     public MaxHP MaxHP { get => maxHP; }
     public MaxMP MaxMP { get => maxMP; }
     public HP HP { get => hP; }
@@ -48,7 +44,6 @@ public class Character : MonoBehaviour
     public MoveSpeed MoveSpeed { get => moveSpeed; }
     public EXP EXP { get => eXP; }
     public Level Level { get => level; }
-    public RawBuff Add10 { get => add10;}
 
     public void InitializeBaseValue
         (float maxhp, float maxmp,
@@ -85,30 +80,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //maxHP = new MaxHP();
-        //maxMP = new MaxMP();
-        //hP = new HP();
-        //mP = new MP();
-
-        ////순서대로 힘, 마법, 물리공격력, 마법공격력, 물리방어, 마법방어
-        //strength = new Strength();
-        //magic = new Magic();
-        //physicalAtk = new PhysicalAtk();
-        //magicAtk = new MagicAtk();
-        //defense = new Defense();
-        //resistance = new Resistance();
-
-        ////순서대로 회피, 적중률, 크리확률, 크리배수
-        //evade = new Evade();
-        //accuracy = new Accuracy();
-        //critChance = new CritChance();
-        //critMultiplier = new CritMultiplier();
-
-        //moveSpeed = new MoveSpeed();
-        //eXP = new EXP();
-        //level = new Level();
-
-        //rawBuff = new RawBuff();
+        
     }
 
     // Update is called once per frame
