@@ -13,7 +13,7 @@ public class hPlayerUI : MonoBehaviour
 
     private void Start()
     {
-        m_Player.InitializeBaseValue(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 0f, 1f, 2f, 3f, 4f, 1f);
+        //m_Player.InitializeBaseValue(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 0f, 1f, 2f, 3f, 4f, 1f);
         m_StatWindow.Init(m_Player);
         m_StatWindow.SetWindow(false);
 
