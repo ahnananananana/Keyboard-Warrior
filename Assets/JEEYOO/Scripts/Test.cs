@@ -21,7 +21,7 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player.Magic.BaseValue = 10;
-            player.Magic.AddRawBuff(rawBuffList.Add10);
+            player.Magic.AddRawBuff(new RawBuff(10, 0));
             player.Magic.AddFinalBuff(finalBuffList.Percent10);
             Debug.Log(player.Magic.FinalValue);
         }
@@ -33,7 +33,7 @@ public class Test : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            player.HP.BaseValue += sword.IHP.BaseValue;
+            
         }
     }
 }

@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public class Item : MonoBehaviour
 {
-    private Stat iStat = new Stat();
-    private HP iHP = new HP();
+    public void Equip(Character c)
+    {
+        c.m_MaxHP.AddModifier(new StatModifier(10, StatModType.Flat, this));
+    }
 
-    public HP IHP { get => iHP; set => iHP = value; }
+    public void UnEquip(Character c)
+    {
+        c.m_MaxHP.RemoveAllModFromSource(this);
+    }
 }
