@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public string m_Name;
+
     public Stat m_MaxHP;
     public Stat m_MaxMP;
     public Stat m_CurrHP;
