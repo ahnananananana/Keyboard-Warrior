@@ -10,24 +10,29 @@ public class CharCtrl : MonoBehaviour
     }
     public STATE state = STATE.CREATE;
 
-    public enum WEAPONTYPE // 사용중인 무기 종류 상태
+    public enum WEAPONTYPE // 사용중인 무기 종류
     {
         BOW,GUN,SWORD
     }
     public WEAPONTYPE weapontype = WEAPONTYPE.BOW;
 
-    public float RollDist = 5.0f;
-    public float RollSpeed = 0.04f; // 이동속도 비례로 만들면 될듯
-    public float StartRollSpeed = 0.1f; // 마찬가지
-    Vector3 CharPos = Vector3.zero;
-    Vector3 TargetPos = Vector3.zero;
+    protected struct MoveData
+    {
+        public Vector3 TargetPosition;
+        public Vector3 CurrentPosition;
+        public Vector3 CurrentRot;
+        public Vector3 MoveDir;
+        public float MoveDist;
+        public float RotY;
+    }
+    protected MoveData m_MoveData;
 
-    //---------임시 오브젝트 변수--------//
-    public GameObject Weapon;
-    public GameObject Bow;
-    public GameObject Gun;
-    public GameObject Sword;
-    public GameObject ArrowObj;
+    //--------삭제할 오브젝트 변수-------//
+    public GameObject Weapon_Obj;
+    public GameObject Bow_Obj;
+    public GameObject Gun_Obj;
+    public GameObject Sword_Obj;
+    public GameObject Arrow_Obj;
     //-----------------------------------//
 
     public Transform UsingWeaponTR;
@@ -36,37 +41,21 @@ public class CharCtrl : MonoBehaviour
     public Transform SwordTR;
     public Transform ArrowMuzzleTR;
 
-    protected struct MoveData
-    {
-        public Vector3 TargetPosition;
-        public Vector3 CurrentPosition;
-        public float MoveDist;
-        public Vector3 MoveDir;
-        public float RotY;
-        public Vector3 CurrentRot;
-    }
-    protected MoveData m_MoveData;
-
-    public Camera m_MainCamera;
     public LayerMask m_GroundLayer;
     public LayerMask m_MonsterLayer;
-    public float m_MoveSpeed = 10.0f;
     public float m_MoveSmooth = 10.0f;
     public float m_RotSmooth = 10.0f;
     public float m_RotSpeed = 400f;
     public float m_AttackRotSpeed = 1200f;
+    public float m_RollSpeed = 10.0f;
 
-    public bool m_SmoothMove = false;
-    public bool m_SmoothRot = false;
+    //----------삭제할 변수----------//
+    public float m_MoveSpeed = 10.0f;
+    //-------------------------------//
 
+    public Camera m_MainCamera;
     public Animator Ani;
-
     public Arrow arrow;
-
-    private void Start()
-    {
-        Ani = GetComponent<Animator>();
-    }
 
     private void Update()   
     {
@@ -78,6 +67,7 @@ public class CharCtrl : MonoBehaviour
         switch (state)
         {
             case STATE.CREATE:
+                Ani = GetComponent<Animator>();
                 ChangeState(STATE.IDLE);
                 break;
             case STATE.IDLE:
@@ -98,15 +88,15 @@ public class CharCtrl : MonoBehaviour
                 //------------------지울거-------------------//
                 if (Input.GetKeyDown(KeyCode.Z))
                 {
-                    ChangeWeapon(WEAPONTYPE.BOW, Bow);
+                    ChangeWeapon(WEAPONTYPE.BOW, Bow_Obj);
                 }
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    ChangeWeapon(WEAPONTYPE.GUN, Gun);
+                    ChangeWeapon(WEAPONTYPE.GUN, Gun_Obj);
                 }
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    ChangeWeapon(WEAPONTYPE.SWORD, Sword);
+                    ChangeWeapon(WEAPONTYPE.SWORD, Sword_Obj);
                 }
                 if (Input.GetKeyDown(KeyCode.S))
                 {
@@ -159,9 +149,9 @@ public class CharCtrl : MonoBehaviour
         }
     }
 
-    void ChangeWeapon(WEAPONTYPE w, GameObject weapon)
+    protected void ChangeWeapon(WEAPONTYPE w, GameObject weapon) // 무기 장착 함수
     {
-        if (Weapon != null) Destroy(Weapon);
+        if (Weapon_Obj != null) Destroy(Weapon_Obj);
 
         switch (w)
         {
@@ -175,16 +165,16 @@ public class CharCtrl : MonoBehaviour
                 UsingWeaponTR = SwordTR;
                 break;
         }
-        Weapon = Instantiate(weapon) as GameObject;
-        Weapon.transform.SetParent(UsingWeaponTR);
-        Weapon.transform.position = UsingWeaponTR.position;
-        Weapon.transform.localRotation = UsingWeaponTR.localRotation;
+        Weapon_Obj = Instantiate(weapon) as GameObject;
+        Weapon_Obj.transform.SetParent(UsingWeaponTR);
+        Weapon_Obj.transform.position = UsingWeaponTR.position;
+        Weapon_Obj.transform.localRotation = UsingWeaponTR.localRotation;
     }
 
     protected void Roll()
     {
         Vector3 pos = transform.localPosition;
-        float delta = m_MoveSpeed * Time.smoothDeltaTime;
+        float delta = m_RollSpeed * Time.smoothDeltaTime;
         Vector3 target = pos + this.transform.forward * delta;
 
         transform.localPosition = target;
@@ -213,7 +203,7 @@ public class CharCtrl : MonoBehaviour
 
     protected void BowFire()
     {
-        GameObject obj = Instantiate(ArrowObj) as GameObject;
+        GameObject obj = Instantiate(Arrow_Obj) as GameObject;
         arrow = obj.GetComponent<Arrow>();
         obj.transform.position = ArrowMuzzleTR.position;
         obj.transform.rotation = this.transform.rotation;
@@ -285,12 +275,11 @@ public class CharCtrl : MonoBehaviour
         m_MoveData.CurrentRot = transform.localRotation.eulerAngles;
     }
 
-
     protected void Moving(bool bPlayer)
     {
         Ani.SetBool("Walk", true);
 
-        if (bPlayer)
+        if (bPlayer) // 이동중일 때 다른 입력을 받기 위함
         {
             if (Input.GetMouseButton(0))
             {
@@ -307,7 +296,7 @@ public class CharCtrl : MonoBehaviour
 
             if (Input.GetKey(KeyCode.D))
             {
-                Ani.Play("Idle");
+                Ani.Play("Idle"); // 구르기 시전 딜레이때문에 넣음
                 Ani.SetBool("Walk", false);
                 ChangeState(STATE.ROLL);
             }
@@ -321,22 +310,13 @@ public class CharCtrl : MonoBehaviour
         m_MoveData.MoveDist -= delta;
 
         m_MoveData.CurrentPosition += m_MoveData.MoveDir * delta;
-        if (m_SmoothMove)
-        {
-            transform.position = Vector3.Lerp(transform.position, m_MoveData.CurrentPosition, Time.smoothDeltaTime * m_MoveSmooth);
-        }
-        else
-        {
-            transform.position = m_MoveData.CurrentPosition;
-        }
 
-        if (Vector3.Distance(transform.position, m_MoveData.CurrentPosition) < 0.01f)
+        transform.position = m_MoveData.CurrentPosition;
+
+        if (m_MoveData.MoveDist < 0.01f)
         {
-            if (m_MoveData.MoveDist < 0.01f)
-            {
-                Ani.SetBool("Walk", false);
-                ChangeState(STATE.IDLE);
-            }
+            Ani.SetBool("Walk", false);
+            ChangeState(STATE.IDLE);
         }
     }
 
@@ -366,15 +346,7 @@ public class CharCtrl : MonoBehaviour
             delta = 0f;
         }
 
-        if (m_SmoothRot)
-        {
-            m_MoveData.CurrentRot.y += delta;
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(m_MoveData.CurrentRot), Time.smoothDeltaTime * m_RotSmooth);
-        }
-        else
-        {
-            this.transform.Rotate(Vector3.up, delta);
-        }
+        this.transform.Rotate(Vector3.up, delta);
     }
 }
 
