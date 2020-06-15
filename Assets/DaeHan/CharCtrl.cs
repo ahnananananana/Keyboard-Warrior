@@ -4,29 +4,39 @@ using UnityEngine;
 
 public class CharCtrl : MonoBehaviour
 {
-    public enum STATE
+    public enum STATE // 캐릭터 상태
     {
         CREATE,IDLE,WALK,ROLL,ATTACK,DEAD
     }
-
     public STATE state = STATE.CREATE;
 
-    public Animator Ani;
-
-    public Arrow arrow;
+    public enum WEAPONTYPE // 사용중인 무기 종류 상태
+    {
+        BOW,GUN,SWORD
+    }
+    public WEAPONTYPE weapontype = WEAPONTYPE.BOW;
 
     public float RollDist = 5.0f;
-    public float RollSpeed = 0.04f;
-    public float StartRollSpeed = 0.1f;
+    public float RollSpeed = 0.04f; // 이동속도 비례로 만들면 될듯
+    public float StartRollSpeed = 0.1f; // 마찬가지
     Vector3 CharPos = Vector3.zero;
     Vector3 TargetPos = Vector3.zero;
 
+    //---------임시 오브젝트 변수--------//
+    public GameObject Weapon;
+    public GameObject Bow;
+    public GameObject Gun;
+    public GameObject Sword;
     public GameObject ArrowObj;
-    public Transform ArrowMuzzlePos;
+    //-----------------------------------//
 
-    LayerMask CharLayer;
+    public Transform UsingWeaponTR;
+    public Transform BowTR;
+    public Transform GunTR;
+    public Transform SwordTR;
+    public Transform ArrowMuzzleTR;
 
-    struct MoveData
+    protected struct MoveData
     {
         public Vector3 TargetPosition;
         public Vector3 CurrentPosition;
@@ -35,18 +45,23 @@ public class CharCtrl : MonoBehaviour
         public float RotY;
         public Vector3 CurrentRot;
     }
+    protected MoveData m_MoveData;
 
     public Camera m_MainCamera;
-    public LayerMask m_CastLayer;
+    public LayerMask m_GroundLayer;
+    public LayerMask m_MonsterLayer;
     public float m_MoveSpeed = 10.0f;
     public float m_MoveSmooth = 10.0f;
     public float m_RotSmooth = 10.0f;
-    public float m_RotSpeed = 50f;
-
-    MoveData m_MoveData;
+    public float m_RotSpeed = 400f;
+    public float m_AttackRotSpeed = 1200f;
 
     public bool m_SmoothMove = false;
     public bool m_SmoothRot = false;
+
+    public Animator Ani;
+
+    public Arrow arrow;
 
     private void Start()
     {
@@ -58,12 +73,72 @@ public class CharCtrl : MonoBehaviour
         StateProcess();
     }
 
-    void ChangeState(STATE s)
+    protected virtual void StateProcess()
+    {
+        switch (state)
+        {
+            case STATE.CREATE:
+                ChangeState(STATE.IDLE);
+                break;
+            case STATE.IDLE:
+                if(Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
+                {
+                    Picking(true);
+                }
+                else if (Input.GetMouseButton(0))
+                {
+                    Picking(false);
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    ChangeState(STATE.ROLL);
+                }
+
+                //------------------지울거-------------------//
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    ChangeWeapon(WEAPONTYPE.BOW, Bow);
+                }
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    ChangeWeapon(WEAPONTYPE.GUN, Gun);
+                }
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    ChangeWeapon(WEAPONTYPE.SWORD, Sword);
+                }
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    Ani.SetTrigger("Hit");
+                }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    ChangeState(STATE.DEAD);
+                }
+                //-------------------------------------------//
+                break;
+            case STATE.WALK:
+                Rotating(m_RotSpeed);
+                Moving(true);
+                break;
+            case STATE.ROLL:
+                Roll();
+                break;
+            case STATE.ATTACK:
+                Rotating(m_AttackRotSpeed);
+                break;
+            case STATE.DEAD:
+                break;
+        }
+    }
+
+    protected virtual void ChangeState(STATE s)
     {
         if (state == s) return;
         state = s;
 
-        switch(s)
+        switch (s)
         {
             case STATE.CREATE:
                 break;
@@ -73,7 +148,7 @@ public class CharCtrl : MonoBehaviour
                 ReadyMove();
                 break;
             case STATE.ROLL:
-                StartCoroutine(Roll());
+                Ani.SetTrigger("Roll");
                 break;
             case STATE.ATTACK:
                 BowAttack();
@@ -84,115 +159,116 @@ public class CharCtrl : MonoBehaviour
         }
     }
 
-    void StateProcess()
+    void ChangeWeapon(WEAPONTYPE w, GameObject weapon)
     {
-        switch (state)
+        if (Weapon != null) Destroy(Weapon);
+
+        switch (w)
         {
-            case STATE.CREATE:
-                ChangeState(STATE.IDLE);
+            case WEAPONTYPE.BOW:
+                UsingWeaponTR = BowTR;
                 break;
-            case STATE.IDLE:
-                if (Input.GetMouseButton(0))
-                {
-                    Picking();
-                }
-
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    Ani.SetTrigger("LookAround");
-                }
-
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    ChangeState(STATE.ROLL);
-                }
-
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    ChangeState(STATE.ATTACK);
-                }
-
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    Ani.SetTrigger("Hit");
-                }
-
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    ChangeState(STATE.DEAD);
-                }
+            case WEAPONTYPE.GUN:
+                UsingWeaponTR = GunTR;
                 break;
-            case STATE.WALK:
-                Moving();
-                break;
-            case STATE.ROLL:
-                break;
-            case STATE.ATTACK:
-                break;
-            case STATE.DEAD:
+            case WEAPONTYPE.SWORD:
+                UsingWeaponTR = SwordTR;
                 break;
         }
-        Rotating();
+        Weapon = Instantiate(weapon) as GameObject;
+        Weapon.transform.SetParent(UsingWeaponTR);
+        Weapon.transform.position = UsingWeaponTR.position;
+        Weapon.transform.localRotation = UsingWeaponTR.localRotation;
     }
 
-    IEnumerator Roll()
+    protected void Roll()
     {
-        Ani.SetTrigger("Roll");
+        Vector3 pos = transform.localPosition;
+        float delta = m_MoveSpeed * Time.smoothDeltaTime;
+        Vector3 target = pos + this.transform.forward * delta;
 
-        CharPos = this.transform.localPosition;
-        TargetPos.z = CharPos.z + RollDist;
-        float TempStartRollSpeed = StartRollSpeed;
-
-        while (TargetPos.z - CharPos.z > 0.1f)
-        {
-            CharPos.z += Time.smoothDeltaTime + RollSpeed + StartRollSpeed;
-            this.transform.localPosition = CharPos;
-            StartRollSpeed /= 1.01f;
-            yield return null;
-        }
-        StartRollSpeed = TempStartRollSpeed;
-
-        ChangeState(STATE.IDLE);
+        transform.localPosition = target;
     }
 
-    void BowAttack()
+    protected void BowAttack()
     {
+        ReadyMove();
+        Ani.Play("Idle");
         Ani.SetTrigger("BowAttack");
     }
 
-    void BowFire()
+    protected void SwordAttack()
+    {
+        ReadyMove();
+        Ani.Play("Idle");
+        Ani.SetTrigger("SwordAttack");
+    }
+
+    protected void GunAttack()
+    {
+        ReadyMove();
+        Ani.Play("Idle");
+        Ani.SetTrigger("GunAttack");
+    }
+
+    protected void BowFire()
     {
         GameObject obj = Instantiate(ArrowObj) as GameObject;
         arrow = obj.GetComponent<Arrow>();
-        //obj.transform.SetParent(ArrowMuzzlePos.transform);
-        obj.transform.position = ArrowMuzzlePos.position;
-        arrow.OnFire();
+        obj.transform.position = ArrowMuzzleTR.position;
+        obj.transform.rotation = this.transform.rotation;
+        arrow.OnFire(ArrowMuzzleTR.forward);
     }
 
-    void Dead()
+    protected void Dead()
     {
-        Ani.SetTrigger("Death");
-    }
+        StopAllCoroutines();
+        Ani.Play("Death");
+    }  
 
-    void Picking()
+    protected void Picking(bool LeftControl)
     {
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 30.0f, m_CastLayer))
+
+        if (Physics.Raycast(ray, out hit, 50.0f, m_MonsterLayer))
+        {
+            Vector3 pos = transform.position;
+            pos.x = hit.point.x;
+            pos.z = hit.point.z;
+
+            m_MoveData.TargetPosition = pos;
+
+            Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
+
+            if (Ani.GetBool("Walk") == true) 
+                Ani.SetBool("Walk", false);
+
+            ChangeState(STATE.ATTACK);
+        }
+
+        else if (Physics.Raycast(ray, out hit, 50.0f, m_GroundLayer))
         {
             Vector3 pos = transform.position;
             pos.x = hit.point.x;
             pos.z = hit.point.z;
             m_MoveData.TargetPosition = pos;
 
-            if ((m_CastLayer & (1 << LayerMask.NameToLayer("Ground"))) != 0)
+            Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
+
+            switch(LeftControl)
             {
-                ChangeState(STATE.WALK);
+                case false:
+                    ChangeState(STATE.WALK);
+                    break;
+                case true:
+                    ChangeState(STATE.ATTACK);
+                    break;
             }
         }
     }
 
-    void ReadyMove()
+    protected void ReadyMove()
     {
         m_MoveData.MoveDir = m_MoveData.TargetPosition - transform.position;
         m_MoveData.MoveDir.Normalize();
@@ -210,14 +286,31 @@ public class CharCtrl : MonoBehaviour
     }
 
 
-    void Moving()
+    protected void Moving(bool bPlayer)
     {
         Ani.SetBool("Walk", true);
 
-        if (Input.GetMouseButton(0))
+        if (bPlayer)
         {
-            ChangeState(STATE.IDLE);
-            Picking();
+            if (Input.GetMouseButton(0))
+            {
+                ChangeState(STATE.IDLE);
+
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    Ani.SetBool("Walk", false);
+                    Picking(true);
+                }
+                else
+                    Picking(false);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                Ani.Play("Idle");
+                Ani.SetBool("Walk", false);
+                ChangeState(STATE.ROLL);
+            }
         }
 
         float delta = m_MoveSpeed * Time.smoothDeltaTime;
@@ -247,9 +340,9 @@ public class CharCtrl : MonoBehaviour
         }
     }
 
-    void Rotating()
+    protected void Rotating(float KindOfRotate)
     {
-        float delta = m_RotSpeed * Time.smoothDeltaTime;
+        float delta = KindOfRotate * Time.smoothDeltaTime;
 
         if (m_MoveData.RotY > 0f)
         {
