@@ -29,11 +29,15 @@ public class Character : MonoBehaviour
     public float m_Exp;
     public float m_Level;
 
-    public void DealDamage(Character attacker, Character defender)
+    public void DealDamage(Character defender)
     {
+        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f)*m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        if (defender.m_CurrHP <= 0)
+        {
+            defender.ChangeState(STATE.DEAD);
+            defender.StateProcess();
+        }
         
-        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f)*attacker.m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
-        if (defender.m_CurrHP <= 0) ChangeState(STATE.DEAD);
     }
 
     public void ChangeState(STATE s)
@@ -44,20 +48,17 @@ public class Character : MonoBehaviour
         switch (s)
         {
             case STATE.CREATE:
-                s = STATE.ALIVE;
+                m_state = STATE.ALIVE;
                 break;
             case STATE.ALIVE:
                 break;
             case STATE.DEAD:
-                StateProcess();
                 break;
-
         }
     }
 
     public void StateProcess()
     {
-        
         switch (m_state)
         {
             case STATE.CREATE:
