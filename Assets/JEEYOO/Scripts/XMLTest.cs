@@ -12,7 +12,7 @@ public class XMLTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateXml();
+        
     }
 
     // Update is called once per frame
@@ -21,6 +21,10 @@ public class XMLTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             LoadXml();
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            LoadExpTable();
         }
     }
 
@@ -68,6 +72,22 @@ public class XMLTest : MonoBehaviour
             Debug.Log("Name :: " + a);
             Debug.Log("MaxHP :: " + b);
             Debug.Log("Level :: " + c);
+        }
+    }
+
+    public void LoadExpTable()
+    {
+        TextAsset textAsset = (TextAsset)Resources.Load("XML/ExpTableSource");
+        Debug.Log(textAsset);
+
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(textAsset.text);
+
+        XmlNodeList nodelist = xmlDoc.SelectNodes("ExpTable");
+
+        foreach(XmlNode node in nodelist)
+        {
+            Debug.Log("Level :: " + node["Field"]["Level"].InnerText);
         }
     }
 }
