@@ -1,0 +1,12 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Item : MonoBehaviour
+{
+    public int m_ID;
+    protected string m_Name;
+
+    public virtual void Equip(Character c) { }
+    public virtual void UnEquip(Character c) { }
+}
