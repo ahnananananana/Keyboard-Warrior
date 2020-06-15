@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public class Item : MonoBehaviour
 {
-    private Stat iStat = new Stat();
-    private HP iHP = new HP();
-
-    public HP IHP { get => iHP; set => iHP = value; }
+    
+    
 }

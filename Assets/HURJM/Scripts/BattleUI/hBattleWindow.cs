@@ -13,12 +13,12 @@ public class hBattleWindow : MonoBehaviour
     public void Init(Character inPlayer)
     {
         m_Player = inPlayer;
-        m_HealthBar.SetMax(inPlayer.MaxHP.FinalValue);
-        m_HealthBar.SetValue(inPlayer.HP.FinalValue);
-        m_ManaBar.SetMax(inPlayer.MaxMP.FinalValue);
-        m_ManaBar.SetValue(inPlayer.MP.FinalValue);
+        m_HealthBar.SetMax(inPlayer.m_MaxHP.m_CurrentValue);
+        m_HealthBar.SetValue(inPlayer.m_CurrHP.m_CurrentValue);
+        m_ManaBar.SetMax(inPlayer.m_MaxMP.m_CurrentValue);
+        m_ManaBar.SetValue(inPlayer.m_CurrMP.m_CurrentValue);
 
-        m_ExpBar.SetMax(inPlayer.EXP.FinalValue);
+        //m_ExpBar.SetMax(inPlayer.EXP.FinalValue);
         m_ExpBar.SetValue(0);//현재 경험치 테이블이 필요
     }
 

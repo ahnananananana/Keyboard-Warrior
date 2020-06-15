@@ -1,99 +1,139 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.ObjectModel;
+using UnityEngine.UIElements;
 
 public delegate void DelVoid();
-//버프가 적용 된 스텟을 산출하기 위한 클래스. 스텟이 상속 받음
-public class Stat : StatBase
+[Serializable]
+public class Stat
 {
     public event DelVoid changeEvent;
-    //여러 버프를 담을 수 있는 List생성.
-    private List<RawBuff> L_RawBuffs = new List<RawBuff>();
-    private List<FinalBuff> L_FinalBuffs = new List<FinalBuff>();
+    //m_BaseValue는 스텟의 기본값. 이 값을 기반으로 모든 버프/아이템으로 인한 증감이 계산됨.
+    public float m_BaseValue;
 
-    //스텟값을 직접 건드리지 않기 위해 선언하는, temp 기능을 하는 멤버변수
-    private float m_FinalValue;
+    //버프가 적용된 값을 받아올 때는 m_CurrentValue를 가져오면 됨(모든 버프가 계산 된 값을 복사해온 값)
+    //CalculateValue는 버프를 합산하는 함수
 
-    public float FinalValue { get => m_FinalValue; set => m_FinalValue = value; }
+    //isChanged는 스텟값이 변했을 때만 CalculateValue를 계산하도록(버프 적용 계산) 하기 위한 bool 값
+    //즉, 스텟값이 변하지도 않았는데 버프 연산을 처음부터 다시 하면 성능이 저하될 것 같아서 만든 코드
 
-    public bool isRawEmpty()
+    //m_LastBaseValue는 m_BaseValue(버프 적용 전, 기본 스텟 값)를 직접 건드리지 않기 위해 만든 변수(m_BaseValue를 담는다)
+    public float m_CurrentValue
     {
-        if (L_RawBuffs.Count > 0) return false;
-        else return true;
-    }
-
-    public bool isFinalEmpty()
-    {
-        if (L_FinalBuffs.Count > 0) return false;
-        else return true;
-    }
-
-    //위에 선언한 List에 버프를 담는 함수
-    public void AddRawBuff(RawBuff buff)
-    {
-        L_RawBuffs.Add(buff);
-        RefreshBuff();
-    }
-
-    public void AddFinalBuff(FinalBuff buff)
-    {
-        L_FinalBuffs.Add(buff);
-        RefreshBuff();
-    }
-
-    //버프가 해제될 때 List에서 해당 버프를 제거하기 위한 함수
-    public void RemoveRawBuff(RawBuff buff)
-    {
-        L_RawBuffs.Remove(buff);
-        RefreshBuff();
-    }
-
-    public void RemoveFinalBuff(FinalBuff buff)
-    {
-        L_FinalBuffs.Remove(buff);
-        RefreshBuff();
-    }
-
-    //RawBuff를 갱신하는 함수
-    public void RefreshBuff()
-    {
-        FinalValue = BaseValue;
-
-        float RawBuffValue = 0;
-        float RawBuffMultiplier = 0;
-
-        foreach(RawBuff buff in L_RawBuffs)
+        get
         {
-            RawBuffValue += buff.BaseValue;
-            RawBuffMultiplier += buff.BaseMultiplier;
+            if (isChanged || m_BaseValue != m_LastBaseValue)
+            {
+                m_LastBaseValue = m_BaseValue;
+                tempValue = CalculateFinalValue();
+                isChanged = false;
+                changeEvent?.Invoke();
+            }
+            return tempValue;
+        }
+    }
+
+    private bool isChanged = true;
+    private float tempValue;
+    private float m_LastBaseValue = float.MinValue;
+
+    //readonly는 const처럼 선언 이후에 값을 바꿀 수 없음
+    //단, const와 다르게 초기화 할 때 뿐 아니라, 해당 객체의 생성자에서는 변경이 가능하며,
+    //List의 경우 리스트 자체는 못 바꾸지만, 리스트 내의 요소는 추가/제거 가능
+    private readonly List<StatModifier> L_statModifiers;
+
+    //위의 리스트를 건드리지 않고 보여주기 위해 복사하는 리스트
+    private readonly ReadOnlyCollection<StatModifier> L_showStatModifiers;
+
+    //기본 생성자가 있어야 null reference 에러가 나지 않음
+    public Stat()
+    {
+        L_statModifiers = new List<StatModifier>();
+        L_showStatModifiers = L_statModifiers.AsReadOnly();
+    }
+
+    public Stat(float basevalue) : this()
+    {
+        m_BaseValue = basevalue;
+
+    }
+
+    public void AddModifier(StatModifier modifier)
+    {
+        isChanged = true;
+        L_statModifiers.Add(modifier);
+        //연산 순서를 위해(합연산, 곱연산의 구분) StatModifier의 order멤버변수에 따라 Sort하는 코드
+        L_statModifiers.Sort(CompareModOrder);
+    }
+
+    private int CompareModOrder(StatModifier a, StatModifier b)
+    {
+        if (a.m_Order < b.m_Order) return -1;
+        else if (a.m_Order > b.m_Order) return 1;
+        return 0;
+    }
+
+    public bool RemoveModifier(StatModifier modifier)
+    {
+        //List에서 해당 요소가 제거되면 true를 반환, 아니면 false를 반환.
+        if (L_statModifiers.Remove(modifier))
+        {
+            isChanged = true;
+            return true;
+        }
+        return false;
+    }
+
+    //특정 아이템/버프로 인해 생긴 스텟의 증/감을 모두 해제하는 함수
+    //for문의 i가 0에서 시작하지 않고 뒤(리스트의 카운트 - 1)에서 시작하는 이유는, 앞에서부터 지우면 리스트의 요소들이 앞으로 당겨지기 때문에
+    //지워지지 않는 버프가 있을 수 있기 때문. 즉, 뒤에서부터 지워야 누락되는 요소가 생기지 않음
+    public bool RemoveAllModFromSource(object source)
+    {
+        bool didRemove = false;
+        for (int i = L_statModifiers.Count - 1; i >= 0; i--)
+        {
+            if (L_statModifiers[i].m_Source == source)
+            {
+                isChanged = true;
+                didRemove = true;
+                L_statModifiers.RemoveAt(i);
+            }
+        }
+        return didRemove;
+    }
+
+    private float CalculateFinalValue()
+    {
+        float finalValue = m_BaseValue;
+        float sumPercentAdd = 0;
+
+        for (int i = 0; i < L_statModifiers.Count; i++)
+        {
+            StatModifier mod = L_statModifiers[i];
+
+            if (mod.m_Type == StatModType.Flat)
+            {
+                finalValue += mod.m_Value;
+            }
+            else if (mod.m_Type == StatModType.PercentAdd)
+            {
+                sumPercentAdd += mod.m_Value;
+                if (i + 1 >= L_statModifiers.Count || L_statModifiers[i + 1].m_Type != StatModType.PercentAdd)
+                {
+                    finalValue *= 1 + sumPercentAdd;
+                    sumPercentAdd = 0;
+                }
+            }
+
+            if (mod.m_Type == StatModType.PercentMult)
+            {
+                finalValue *= 1 + mod.m_Value;
+            }
         }
 
-        FinalValue += RawBuffValue;
-        FinalValue *= (1 + RawBuffMultiplier);
-   
-        float FinalBuffValue = 0;
-        float FinalBuffMultiplier = 0;
-
-        foreach (FinalBuff buff in L_FinalBuffs)
-        {
-            FinalBuffValue += buff.BaseValue;
-            FinalBuffMultiplier += buff.BaseMultiplier;
-        }
-
-        FinalValue += FinalBuffValue;
-        FinalValue *= (1 + FinalBuffMultiplier);
-
-        changeEvent?.Invoke();
+        
+        return (float)Math.Round(finalValue, 2);
     }
-
-    //경험치, 레벨 증감 / 포션으로 인한 체력/마나 증감 구현용
-    public void IncreaseStat(float number)
-    {
-        FinalValue += number;
-    }
-
-    
-
-    //추가해야 할 것 : 포션이나 피격 등으로 체력, 마나 등 증감시키는 함수 -> 이것도 그냥 있는 함수로 쓸까?
-    //상위 스텟에 영향 받는 스텟(ex. 공격력은 힘의 영향을 받음)들은 코드 수정, 체력은 임시 변수로 행동할(?) 멤버 변수를 추가
 }

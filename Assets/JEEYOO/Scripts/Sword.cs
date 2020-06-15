@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Sword : Item
 {
-    public Sword()
+    public void Equip(Character c)
     {
-        IHP.BaseValue = 10;
-        IHP.BaseMultiplier = 0;
+        c.m_MaxHP.AddModifier(new StatModifier(10, StatModType.Flat, this));
     }
 
-    
+    public void UnEquip(Character c)
+    {
+        c.m_MaxHP.RemoveAllModFromSource(this);
+    }
 }
