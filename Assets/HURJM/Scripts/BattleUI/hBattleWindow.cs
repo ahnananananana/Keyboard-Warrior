@@ -14,9 +14,9 @@ public class hBattleWindow : MonoBehaviour
     {
         m_Player = inPlayer;
         m_HealthBar.SetMax(inPlayer.m_MaxHP.m_CurrentValue);
-        m_HealthBar.SetValue(inPlayer.m_CurrHP.m_CurrentValue);
+        m_HealthBar.SetValue(inPlayer.m_CurrHP);
         m_ManaBar.SetMax(inPlayer.m_MaxMP.m_CurrentValue);
-        m_ManaBar.SetValue(inPlayer.m_CurrMP.m_CurrentValue);
+        m_ManaBar.SetValue(inPlayer.m_CurrMP);
 
         //m_ExpBar.SetMax(inPlayer.EXP.FinalValue);
         m_ExpBar.SetValue(0);//현재 경험치 테이블이 필요
