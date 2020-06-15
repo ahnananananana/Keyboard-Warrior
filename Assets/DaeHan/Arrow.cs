@@ -14,13 +14,13 @@ public class Arrow : MonoBehaviour
     public GameObject ArrowObj;
     public GameObject CrashEffect;
 
-    public float DeleteEffectTime = 2.5f;
-    public float Range = 15.0f;
-    public float MoveSpeed = 0.1f;
+    public float DeleteArrowTime = 2.0f;
+    public float MoveSpeed = 1.0f;
+    public float fTime = 0.0f;
 
-    Vector3 StartPos;
-    Vector3 ArrowPos;
-    Vector3 TargetPos;
+    Vector3 m_Dir;
+
+    public Effect effect;
 
     public LayerMask CastLayer;
 
@@ -58,8 +58,9 @@ public class Arrow : MonoBehaviour
             case STATE.MOVE:
                 break;
             case STATE.CRASH:
-                StartCoroutine(Effect());
+                CreateEffect();
                 Damage();
+                ChangeState(STATE.OUT);
                 break;
             case STATE.OUT:
                 Out();
@@ -71,66 +72,54 @@ public class Arrow : MonoBehaviour
     {
         this.transform.parent = null;
 
+        Vector3 pos = transform.localPosition;
+        float delta = MoveSpeed * Time.smoothDeltaTime;
+        Vector3 target = pos + m_Dir * delta;
+
         Ray ray = new Ray();
-        ray.origin = ArrowPos;
-        ray.direction = TargetPos - ArrowPos;
+        ray.origin = pos;
+        ray.direction = target - pos;
         ray.direction.Normalize();
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, StartPos.z, CastLayer))
+        if (Physics.Raycast(ray, out hit, delta, CastLayer)) // 충돌이 났을 때
         {
             transform.localPosition = hit.point;
             ChangeState(STATE.CRASH);
         }
         else
         {
-            ArrowPos.z += MoveSpeed + Time.smoothDeltaTime;
-            this.transform.position = ArrowPos;
+            transform.localPosition = target;
 
-            if (ArrowPos.z >= TargetPos.z)
+            fTime += Time.smoothDeltaTime;
+            if (fTime >= DeleteArrowTime)
             {
                 ChangeState(STATE.OUT);
             }
         }
     }
 
-    void Out()
-    {
-        Destroy(gameObject);
-    }
-
-    IEnumerator Effect()
+    void CreateEffect()
     {
         GameObject obj = Instantiate(CrashEffect);
         obj.transform.position = this.transform.position;
-        yield return null;
-        /*
-        float fTime = 0.0f;
-        while (true)
-        {
-            fTime += Time.smoothDeltaTime;
+        obj.transform.rotation = this.transform.rotation;
+    }
 
-            if (DeleteEffectTime <= fTime)
-            {
-                Debug.Log("삭제");
-                Destroy(obj);
-                yield return null;
-            }
-        }
-        */
+    void Out()
+    {
+        fTime = 0.0f;
+        Destroy(ArrowObj);
     }
 
     void Damage()
     {
-        Destroy(gameObject);
+        Debug.Log("타격");
     }
 
-    public void OnFire()
+    public void OnFire(Vector3 dir)
     {
-        ArrowPos = this.transform.position;
-        StartPos = ArrowPos;
-        TargetPos = ArrowPos;
-        TargetPos.z += Range;
+        m_Dir = dir;
         ChangeState(STATE.MOVE);
     }
 }
