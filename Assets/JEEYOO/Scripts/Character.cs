@@ -26,18 +26,34 @@ public class Character : MonoBehaviour
     public Stat m_MoveSpeed;
     public Stat m_AttackSpeed;
 
-    public float m_Exp;
-    public float m_Level;
+    public Experience m_EXP;
 
-    public void DealDamage(Character defender)
+    private void Start()
+    {
+        
+    }
+
+    public void IncreaseStatByLvUp()
+    {
+        m_MaxHP.IncreaseBaseValue();
+        m_MaxMP.IncreaseBaseValue();
+        m_Attack.IncreaseBaseValue();
+        m_Defense.IncreaseBaseValue();
+        m_Magic.IncreaseBaseValue();
+        m_Resistance.IncreaseBaseValue();
+        m_MoveSpeed.IncreaseBaseValue();
+        m_AttackSpeed.IncreaseBaseValue();
+    }
+
+    public void DealDamage(Monster defender)
     {
         defender.m_CurrHP -= (Random.Range(0.95f, 1.05f)*m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
         if (defender.m_CurrHP <= 0)
         {
+            m_EXP.GetExp(defender);
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
         }
-        
     }
 
     public void ChangeState(STATE s)

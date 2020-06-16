@@ -5,6 +5,7 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     public Player player;
+    public Monster monster;
     
     public Item[] allPrefabs;
 
@@ -17,9 +18,11 @@ public class Test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
+            player.m_Attack.IncreaseBaseValue();
+            Debug.Log(player.m_Attack.m_BaseValue);
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
