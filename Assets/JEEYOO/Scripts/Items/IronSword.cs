@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class IronSword : Sword
 {
-    public IronSword()
-    {
-        m_ID = 1;
-    }
-       
     void Start()
     {
         m_ID = 1;
+        m_Name = "IronSword";
     }
     public override void Equip(Character c)
     {

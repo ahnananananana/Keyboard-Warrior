@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ItemData
 {
-    public Item[] Data_Item;
+    //public Item[] Data_Item;
 
     void Start()
     {
-        Data_Item = Resources.LoadAll<Item>("Prefabs");
+        //Data_Item = Resources.LoadAll<Item>("Prefabs");
     }
 }

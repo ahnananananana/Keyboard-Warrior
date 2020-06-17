@@ -6,13 +6,14 @@ public class Test : MonoBehaviour
 {
     public Player player;
     public Monster monster;
+    private MainData m_MainData;
     
     public Item[] allPrefabs;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_MainData.ItemData[(int)ITEMID.IRONSWORD].Equip(player);
     }
 
     // Update is called once per frame
@@ -28,7 +29,10 @@ public class Test : MonoBehaviour
         {
             allPrefabs = Resources.LoadAll<Item>("Prefabs");
             for (int i = 0; i < allPrefabs.Length; i++)
-            Debug.Log(allPrefabs[i].m_ID);
+            {
+                Debug.Log(allPrefabs[i].m_ID);
+                Debug.Log(allPrefabs[i].m_Name);
+            }
 
             Debug.Log(player.m_Attack.m_CurrentValue);
             allPrefabs[0].Equip(player);
