@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1624910484288604643}
   - component: {fileID: 1624910484287638307}
   - component: {fileID: 1624910484279888935}
-  - component: {fileID: -3338212713776414946}
+  - component: {fileID: 8511615727158967088}
   m_Layer: 0
   m_Name: 00_BroadSword
   m_TagString: Untagged
@@ -96,7 +96,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &-3338212713776414946
+--- !u!114 &8511615727158967088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1624910484289836527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aed6a09489c05644880018f82985a38c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b77d3216eaf94e4b9f84bd3208a8b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ID: 0
