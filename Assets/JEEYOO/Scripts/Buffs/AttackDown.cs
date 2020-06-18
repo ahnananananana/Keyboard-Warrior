@@ -6,7 +6,7 @@ public class AttackDown : Buff
 {
     public override void ApplyBuff(Character c)
     {
-        c.m_Attack.AddModifier(new StatModifier(-10, StatModType.PercentAdd, this));
+        c.m_Attack.AddModifier(new StatModifier(-0.1f, StatModType.PercentMult, this));
     }
 
     public override void RemoveBuff(Character c)

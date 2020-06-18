@@ -16,27 +16,29 @@ public enum SWORDID
     ULTIMATEBLADE,
 }
 
-public class MainData
+public class MainData : MonoBehaviour
 {
-    private static MainData instance = null;
+    //private static MainData instance = null;
 
-    public static MainData mainData
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = new MainData();
-            }
-            return instance;
-        }
-    }
+    //public static MainData mainData
+    //{
+    //    get
+    //    {
+    //        if(instance == null)
+    //        {
+    //            instance = new MainData();
+    //        }
+    //        return instance;
+    //    }
+    //}
 
 
     public Item[] ItemData;
     public Buff[] BuffData;
     public Monster[] MonsterData;
     public hLevelData[] LevelData;
+
+    public bool isLoaded = false;
 
     // Start is called before the first frame update
     void Awake()
