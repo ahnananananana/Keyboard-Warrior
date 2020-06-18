@@ -28,6 +28,10 @@ public class hDoAnimation : hAiAction
             {
                 return NodeState.SUCCESS;
             }
+            else if(!m_Animator.GetCurrentAnimatorStateInfo(0).IsName(m_AnimationName))
+            {
+                return NodeState.SUCCESS;
+            }
             else
             {
                 //m_Animator.SetBool(m_AnimationHash, false);
