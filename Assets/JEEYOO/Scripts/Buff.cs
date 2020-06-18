@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Buff : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string m_BuffName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public virtual void ApplyBuff(Character c) { }
+    public virtual void RemoveBuff(Character c) { }
 }
