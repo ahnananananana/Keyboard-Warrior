@@ -1856,8 +1856,9 @@ GameObject:
   - component: {fileID: 3153055883086460412}
   - component: {fileID: 3153055883086460413}
   - component: {fileID: 1877481398189747913}
+  - component: {fileID: 2628945020013842487}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1924,9 +1925,9 @@ MonoBehaviour:
   SwordAtkBox: {fileID: 6519818893972005295, guid: 34173fb3928a39e498f32727fe638ee7,
     type: 3}
   UsingWeaponTR: {fileID: 0}
-  BowTR: {fileID: 2053017726262320300}
-  GunTR: {fileID: 2020873884704258821}
-  SwordTR: {fileID: 2020873884704258821}
+  BowTR: {fileID: 6646639971161589918}
+  GunTR: {fileID: 303446664917140800}
+  SwordTR: {fileID: 5295250213943984899}
   ArrowMuzzleTR: {fileID: 3894910351530657436}
   BulletMuzzleTR: {fileID: 6858592198993121693}
   SwordAtkBoxTR: {fileID: 1600155490018731350}
@@ -1960,6 +1961,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2628945020013842487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404130252133908851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b32785e2e7a59449984eb75553878fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_state: 1
+  m_ID: 0
+  m_CharName: 
+  m_MaxHP:
+    m_BaseValue: 0
+  m_MaxMP:
+    m_BaseValue: 0
+  m_CurrHP: 0
+  m_CurrMP: 0
+  m_Attack:
+    m_BaseValue: 0
+  m_Defense:
+    m_BaseValue: 0
+  m_Magic:
+    m_BaseValue: 0
+  m_Resistance:
+    m_BaseValue: 0
+  m_MoveSpeed:
+    m_BaseValue: 0
+  m_AttackSpeed:
+    m_BaseValue: 0
+  m_EXP: {fileID: 0}
+  m_Damage: 0
 --- !u!1 &6404464754326610523
 GameObject:
   m_ObjectHideFlags: 0

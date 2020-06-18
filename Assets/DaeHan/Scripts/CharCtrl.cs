@@ -164,6 +164,7 @@ public class CharCtrl : MonoBehaviour
     protected void ChangeWeapon(WEAPONTYPE w, GameObject weapon) // 무기 장착 함수
     {
         if (Weapon_Obj != null) Destroy(Weapon_Obj);
+        weapontype = w;
 
         switch (w)
         {
