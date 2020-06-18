@@ -39,7 +39,7 @@ public class MainData
     public hLevelData[] LevelData;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ItemData = Resources.LoadAll<Item>("Prefabs");
         BuffData = Resources.LoadAll<Buff>("Prefabs");
