@@ -9,17 +9,26 @@ public class hBattleWindow : MonoBehaviour
     private hStatBar m_HealthBar, m_ManaBar, m_ExpBar;
     [SerializeField]
     private hStatusContainer m_StatusContainer;
+    [SerializeField]
+    private Canvas m_Canvas;
 
     public void Init(Character inPlayer)
     {
         m_Player = inPlayer;
-        m_HealthBar.SetMax(inPlayer.m_MaxHP.m_CurrentValue);
-        m_HealthBar.SetValue(inPlayer.m_CurrHP);
-        m_ManaBar.SetMax(inPlayer.m_MaxMP.m_CurrentValue);
-        m_ManaBar.SetValue(inPlayer.m_CurrMP);
+        RefreshUI();
+    }
 
-        //m_ExpBar.SetMax(inPlayer.EXP.FinalValue);
-        m_ExpBar.SetValue(0);//현재 경험치 테이블이 필요
+    public void SetActive(bool inSet) => m_Canvas.enabled = inSet;
+
+    public void RefreshUI()
+    {
+        m_HealthBar.SetMax(m_Player.m_MaxHP.m_CurrentValue);
+        m_HealthBar.SetValue(m_Player.m_CurrHP);
+        m_ManaBar.SetMax(m_Player.m_MaxMP.m_CurrentValue);
+        m_ManaBar.SetValue(m_Player.m_CurrMP);
+
+        //m_ExpBar.SetMax();//현재 경험치 테이블이 필요
+        m_ExpBar.SetValue(m_Player.m_EXP.m_CurrExp);
     }
 
 }

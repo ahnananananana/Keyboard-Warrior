@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12faac555020a9c43bbe670e3bd36286, type: 3}
   m_Name: testLeveldata
   m_EditorClassIdentifier: 
+  m_Level: 0
   m_IsBoss: 0
-  m_MonsterList: []
+  m_MonsterList:
+  - {fileID: 6768580209331075340, guid: 2ef891e3881d1bf46822768745744e32, type: 3}

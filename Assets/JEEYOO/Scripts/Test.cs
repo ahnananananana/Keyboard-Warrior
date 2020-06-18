@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class jTest : MonoBehaviour
 {
     public Player player;
     public Monster monster;

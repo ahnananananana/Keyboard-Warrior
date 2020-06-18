@@ -9,11 +9,9 @@ public class hStatBar : MonoBehaviour
     private Slider m_Slider;
     private float m_Max;
 
-    public void SetValue(float inVal) => m_Slider.value = inVal / m_Max;//현재 체력이 바뀔 때 실행
+    public void SetValue(float inVal) => m_Slider.value = inVal;//현재 체력이 바뀔 때 실행
     public void SetMax(float inMax)//최대체력이 바뀔 때 실행
     {
-        m_Max = inMax;
-        float rawVal = m_Max * m_Slider.value;
-        SetValue(rawVal);
+        m_Slider.maxValue = inMax;
     }
 }

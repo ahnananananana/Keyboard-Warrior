@@ -9,9 +9,11 @@ public class Character : MonoBehaviour
         CREATE, ALIVE, DEAD,
     }
 
-    STATE m_state = STATE.ALIVE;
+    public event DelVoid deadEvent;
+
+    public STATE m_state = STATE.ALIVE;
     public int m_ID;
-    public string m_Name;
+    public string m_CharName;
 
     public Stat m_MaxHP;
     public Stat m_MaxMP;
@@ -51,6 +53,7 @@ public class Character : MonoBehaviour
         if (defender.m_CurrHP <= 0)
         {
             m_EXP.GetExp((Monster)defender);
+            deadEvent?.Invoke();
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
         }
@@ -82,7 +85,7 @@ public class Character : MonoBehaviour
             case STATE.ALIVE:
                 break;
             case STATE.DEAD:
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
                 break;
         }
     }

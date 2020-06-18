@@ -1,28 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class hPlayerUI : MonoBehaviour
 {
     [SerializeField]
-    private Character m_Player;
+    private Player m_Player;
     [SerializeField]
     private hStatWindow m_StatWindow;
     [SerializeField]
     private hBattleWindow m_BattleWindow;
+    [SerializeField]
+    private Image m_YOUDIED;
 
-    private void Start()
-    {
-        //m_Player.InitializeBaseValue(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 0f, 1f, 2f, 3f, 4f, 1f);
-        m_StatWindow.Init(m_Player);
-        m_StatWindow.SetWindow(false);
-
-        m_BattleWindow.Init(m_Player);
-    }
+    public Image YOUDIED { get => m_YOUDIED;}
 
     public void Init(Player inPlayer)
     {
-        m_Player = m_Player;
+        m_Player = inPlayer;
+        m_StatWindow.Init(m_Player);
+        m_StatWindow.SetWindow(false);
+        m_BattleWindow.Init(m_Player);
     }
 
     public void ShowStatWindow()
@@ -35,7 +34,7 @@ public class hPlayerUI : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.C))
         {
             if(!m_StatWindow.isActive)
                 m_StatWindow.SetWindow(true);
@@ -46,6 +45,8 @@ public class hPlayerUI : MonoBehaviour
     }
 
     public void RefreshUI()
-    { }
-
+    {
+        m_BattleWindow.RefreshUI();
+        m_StatWindow.RefreshUI();
+    }
 }
