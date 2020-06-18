@@ -35,14 +35,14 @@ public class Character : MonoBehaviour
 
     public void IncreaseStatByLvUp()
     {
-        m_MaxHP.IncreaseBaseValue();
-        m_MaxMP.IncreaseBaseValue();
-        m_Attack.IncreaseBaseValue();
-        m_Defense.IncreaseBaseValue();
-        m_Magic.IncreaseBaseValue();
-        m_Resistance.IncreaseBaseValue();
-        m_MoveSpeed.IncreaseBaseValue();
-        m_AttackSpeed.IncreaseBaseValue();
+        m_MaxHP.IncreaseBaseValue(1.2f);
+        m_MaxMP.IncreaseBaseValue(1.2f);
+        m_Attack.IncreaseBaseValue(1.2f);
+        m_Defense.IncreaseBaseValue(1.2f);
+        m_Magic.IncreaseBaseValue(1.2f);
+        m_Resistance.IncreaseBaseValue(1.2f);
+        m_MoveSpeed.IncreaseBaseValue(1.05f);
+        m_AttackSpeed.IncreaseBaseValue(1.05f);
     }
 
     public void DealDamage(Monster defender)

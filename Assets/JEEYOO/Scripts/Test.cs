@@ -13,7 +13,7 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_MainData.ItemData[(int)ITEMID.IRONSWORD].Equip(player);
+        m_MainData.ItemData[(int)ITEMID.BRONZESWORD].Equip(player);
     }
 
     // Update is called once per frame
@@ -22,8 +22,7 @@ public class Test : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.m_Attack.IncreaseBaseValue();
-            Debug.Log(player.m_Attack.m_BaseValue);
+
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -31,7 +30,7 @@ public class Test : MonoBehaviour
             for (int i = 0; i < allPrefabs.Length; i++)
             {
                 Debug.Log(allPrefabs[i].m_ID);
-                Debug.Log(allPrefabs[i].m_Name);
+                Debug.Log(allPrefabs[i].m_ItemName);
             }
 
             Debug.Log(player.m_Attack.m_CurrentValue);

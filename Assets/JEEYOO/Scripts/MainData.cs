@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ITEMID
 {
-    IRONSWORD,  // == 0, 따로 sort하지 않아도 되도록 파일명도 00Ironsword으로
+    BRONZESWORD,  // == 0, 따로 sort하지 않아도 되도록 파일명도 00Ironsword으로
     FIRESWORD,  // == 1, 따로 sort하지 않아도 되도록 파일명도 01firesword으로
 }
 
