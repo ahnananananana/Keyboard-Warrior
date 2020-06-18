@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/StartWindow.unity
+    guid: 6e5e4ef452f5b8745a9bf57312144d5e
+  - enabled: 1
+    path: Assets/GillSu/Scenes/LoadingScene.unity
+    guid: 56eceea87cb92754d8d99263ccb50a7f
+  - enabled: 1
+    path: Assets/HURJM/Scenes/Map.unity
+    guid: 4abd6069b33972945a8b1c348c65e76a
   m_configObjects: {}
