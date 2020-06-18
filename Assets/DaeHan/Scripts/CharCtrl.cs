@@ -241,7 +241,7 @@ public class CharCtrl : MonoBehaviour
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 50.0f, m_MonsterLayer))
+        if (Physics.Raycast(ray, out hit, 1000f, m_MonsterLayer))
         {
             Vector3 pos = transform.position;
             pos.x = hit.point.x;
@@ -257,7 +257,7 @@ public class CharCtrl : MonoBehaviour
             ChangeState(STATE.ATTACK);
         }
 
-        else if (Physics.Raycast(ray, out hit, 50.0f, m_GroundLayer))
+        else if (Physics.Raycast(ray, out hit, 1000f, m_GroundLayer))
         {
             Vector3 pos = transform.position;
             pos.x = hit.point.x;

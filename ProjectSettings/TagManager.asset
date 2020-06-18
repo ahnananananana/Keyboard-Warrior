@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - WAY_Point
+  - AtkBox
+  - FxTemporaire
+  - Enemy
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -16,7 +21,7 @@ TagManager:
   - Player
   - PlayerForStat
   - PostProcessing
-  - 
+  - Monster
   - 
   - 
   - 
