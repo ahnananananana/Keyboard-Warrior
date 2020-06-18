@@ -66,6 +66,7 @@ public class CharCtrl : MonoBehaviour
 
     private void Start()
     {
+        UsingAni = GetComponent<Animator>();
         ChangeWeapon(WEAPONTYPE.BOW, Bow_Obj);
     }
 
@@ -79,7 +80,6 @@ public class CharCtrl : MonoBehaviour
         switch (state)
         {
             case STATE.CREATE:
-                UsingAni = GetComponent<Animator>();
                 ChangeState(STATE.IDLE);
                 break;
             case STATE.IDLE:
