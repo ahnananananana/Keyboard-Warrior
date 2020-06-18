@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
     public Stat m_AttackSpeed;
 
     public Experience m_EXP;
+    public float m_Damage;
 
     private void Start()
     {
@@ -49,7 +50,8 @@ public class Character : MonoBehaviour
 
     public void DealDamage(Character defender)
     {
-        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f)*m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        defender.m_CurrHP -= m_Damage;
         if (defender.m_CurrHP <= 0)
         {
             m_EXP.GetExp((Monster)defender);
