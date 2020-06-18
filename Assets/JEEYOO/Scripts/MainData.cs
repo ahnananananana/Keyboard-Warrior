@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ITEMID
+public enum SWORDID
 {
-    BRONZESWORD,  // == 0, 따로 sort하지 않아도 되도록 파일명도 00Ironsword으로
-    FIRESWORD,  // == 1, 따로 sort하지 않아도 되도록 파일명도 01firesword으로
+    BROADSWORD,  // == 0, 따로 sort하지 않아도 되도록 파일명도 00Ironsword으로
+    IRONBLADE,  // == 1, 따로 sort하지 않아도 되도록 파일명도 01firesword으로
+    LONGSWORD,
+    RAPIDBLADE,
+    GIANTSWORD,
+    RUNESWORD,
+    PIERCINGSWORD,
+    SKELETONBLADE,
+    DRAGONSWORD,
+    ULTIMATEBLADE,
 }
 
-public class MainData : MonoBehaviour
+public class MainData
 {
     public Item[] ItemData;
     public Buff[] BuffData;

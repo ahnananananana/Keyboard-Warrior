@@ -14,7 +14,7 @@ public class SwordAtk : MonoBehaviour
     public float fDeleteTime = 0.1f;
     public GameObject Obj_CrashEffect;
     public Collider CrashMonster;
-    public TempMonster tempmonster;
+    //public TempMonster tempmonster;
 
     private void Update()
     {
@@ -77,6 +77,7 @@ public class SwordAtk : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
 
     /*
     public void Damage(Character defender)
