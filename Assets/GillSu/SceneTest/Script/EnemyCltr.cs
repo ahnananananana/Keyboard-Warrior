@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyCltr : Monster
 {
@@ -20,7 +19,6 @@ public class EnemyCltr : Monster
     private Transform PlayerTr;
     private Transform tr;
 
-
     private Vector3 movePos;
     private bool isAttack = false;
     private Animator anim;
@@ -29,12 +27,12 @@ public class EnemyCltr : Monster
     {
        // if (this.t_Text.gameObject != null) Destroy(this.t_Text.gameObject, 1.0f);
     }
-    void OnHitTextOn9(float dmg)
+    void OnHitTextOn9()
     {
         t_Text = (Instantiate(Resources.Load("frepab/Hit")) as GameObject).GetComponent<HitText>();
-        t_Text.GetComponentInChildren<Text>().text = dmg.ToString(); 
         if (t_Text != null)
         {
+            Debug.Log(transform.Find("DamgeLog"));
             t_Text.SetPosition(transform.Find("DamgeLog"), 0.15f);
         }
     }
@@ -86,11 +84,9 @@ public class EnemyCltr : Monster
     public void OnAttack()
     {
        GameObject muzzle =  Instantiate(Hit_Muzzle, muzzle_Pos.position, Quaternion.identity);
-
-        Destroy(muzzle, 0.5f);
+        Destroy(muzzle, 1.0f);
         //stat.DealDamage(PlayerTr.GetComponent<Player>());
-      
-        OnHitTextOn9(stat.m_Damage);
+        OnHitTextOn9();
     }
  
 }
