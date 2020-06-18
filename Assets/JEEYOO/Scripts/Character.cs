@@ -30,6 +30,7 @@ public class Character : MonoBehaviour
 
     public Experience m_EXP;
     public float m_Damage;
+
     private void Start()
     {
         

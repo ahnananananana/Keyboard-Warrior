@@ -2721,6 +2721,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5614990214136812148}
+  - component: {fileID: 2206572190302699167}
+  - component: {fileID: 6851093769204940819}
+  - component: {fileID: 6930120389138512602}
+  - component: {fileID: 995895947019858279}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -2744,6 +2748,122 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2206572190302699167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914640172352381031}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &6851093769204940819
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914640172352381031}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69c06cc8c7f45a3478a901ef32afd05c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6930120389138512602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914640172352381031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b32785e2e7a59449984eb75553878fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_state: 1
+  m_ID: 0
+  m_CharName: 
+  m_MaxHP:
+    m_BaseValue: 0
+  m_MaxMP:
+    m_BaseValue: 0
+  m_CurrHP: 0
+  m_CurrMP: 0
+  m_Attack:
+    m_BaseValue: 0
+  m_Defense:
+    m_BaseValue: 0
+  m_Magic:
+    m_BaseValue: 0
+  m_Resistance:
+    m_BaseValue: 0
+  m_MoveSpeed:
+    m_BaseValue: 0
+  m_AttackSpeed:
+    m_BaseValue: 0
+  m_EXP: {fileID: 0}
+  m_Damage: 0
+--- !u!114 &995895947019858279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914640172352381031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e7f830d40cb3e4cabed3b3c2ff6cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  weapontype: 0
+  Weapon_Obj: {fileID: 0}
+  Bow_Obj: {fileID: 4981288564361890070, guid: 70a2069172ae7134288cedff8e77c697, type: 3}
+  Gun_Obj: {fileID: 4722304387822601684, guid: ee84e15ae769fce40aaded1a1926bd2d, type: 3}
+  Sword_Obj: {fileID: 3544069245625585586, guid: 25b416cc694149a42a7c55b7bd756d5e,
+    type: 3}
+  Arrow_Obj: {fileID: 7963779940808791218, guid: a0b9ab767065404459becef12c72c8ac,
+    type: 3}
+  Bullet_Obj: {fileID: 8480829253863182150, guid: 5b6cd3d9b73b141439b006f77c1904ef,
+    type: 3}
+  SwordAtkBox: {fileID: 4894949337751363256, guid: 87805f8c0728d584b84e72145c41945c,
+    type: 3}
+  UsingWeaponTR: {fileID: 0}
+  BowTR: {fileID: 0}
+  GunTR: {fileID: 0}
+  SwordTR: {fileID: 0}
+  ArrowMuzzleTR: {fileID: 0}
+  BulletMuzzleTR: {fileID: 0}
+  SwordAtkBoxTR: {fileID: 0}
+  bLongDistAtk: 0
+  m_RotSpeed: 400
+  m_AttackRotSpeed: 1200
+  m_RollSpeed: 10
+  m_MoveSpeed: 5
+  m_GroundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  m_MonsterLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_MainCamera: {fileID: 0}
+  UsingAni: {fileID: 0}
+  BowAni: {fileID: 9100000, guid: 69c06cc8c7f45a3478a901ef32afd05c, type: 2}
+  GunAni: {fileID: 9100000, guid: 4db10980cdfe3b04b8da55dca9670b8f, type: 2}
+  SwordAni: {fileID: 9100000, guid: f3f0ace2cb0b70e499f594f2831f849a, type: 2}
+  proj: {fileID: 0}
 --- !u!1 &9101435503373748185
 GameObject:
   m_ObjectHideFlags: 0
