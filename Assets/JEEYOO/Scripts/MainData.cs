@@ -41,7 +41,7 @@ public class MainData : MonoBehaviour
     public bool isLoaded = false;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         ItemData = Resources.LoadAll<Item>("Prefabs");
         BuffData = Resources.LoadAll<Buff>("Prefabs");
