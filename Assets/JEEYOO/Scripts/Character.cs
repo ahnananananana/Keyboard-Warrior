@@ -45,12 +45,12 @@ public class Character : MonoBehaviour
         m_AttackSpeed.IncreaseBaseValue();
     }
 
-    public void DealDamage(Monster defender)
+    public void DealDamage(Character defender)
     {
         defender.m_CurrHP -= (Random.Range(0.95f, 1.05f)*m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
         if (defender.m_CurrHP <= 0)
         {
-            m_EXP.GetExp(defender);
+            m_EXP.GetExp((Monster)defender);
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
         }

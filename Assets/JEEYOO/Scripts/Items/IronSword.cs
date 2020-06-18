@@ -7,7 +7,7 @@ public class IronSword : Sword
     void Start()
     {
         m_ID = 1;
-        m_Name = "IronSword";
+        m_ItemName = "IronSword";
     }
     public override void Equip(Character c)
     {

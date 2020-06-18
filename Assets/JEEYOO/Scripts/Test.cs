@@ -31,7 +31,7 @@ public class Test : MonoBehaviour
             for (int i = 0; i < allPrefabs.Length; i++)
             {
                 Debug.Log(allPrefabs[i].m_ID);
-                Debug.Log(allPrefabs[i].m_Name);
+                Debug.Log(allPrefabs[i].m_ItemName);
             }
 
             Debug.Log(player.m_Attack.m_CurrentValue);

@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCltr : MonoBehaviour
+public class EnemyCltr : Monster
 {
+    public Monster stat;
+
+    public HitText t_Text = null;
+
     public Transform muzzle_Pos; // 이펙트의 위치 오브젝트
     public GameObject Hit_Muzzle; // 이펙트 프리펩
 
@@ -18,6 +22,20 @@ public class EnemyCltr : MonoBehaviour
     private Vector3 movePos;
     private bool isAttack = false;
     private Animator anim;
+
+    private void OnDestroy()
+    {
+       // if (this.t_Text.gameObject != null) Destroy(this.t_Text.gameObject, 1.0f);
+    }
+    void OnHitTextOn9()
+    {
+        t_Text = (Instantiate(Resources.Load("frepab/Hit")) as GameObject).GetComponent<HitText>();
+        if (t_Text != null)
+        {
+            Debug.Log(transform.Find("DamgeLog"));
+            t_Text.SetPosition(transform.Find("DamgeLog"), 0.15f);
+        }
+    }
 
     void Start()
     {
@@ -67,6 +85,8 @@ public class EnemyCltr : MonoBehaviour
     {
        GameObject muzzle =  Instantiate(Hit_Muzzle, muzzle_Pos.position, Quaternion.identity);
         Destroy(muzzle, 1.0f);
+        //stat.DealDamage(PlayerTr.GetComponent<Player>());
+        OnHitTextOn9();
     }
  
 }
