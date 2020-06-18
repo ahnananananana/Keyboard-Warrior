@@ -478,8 +478,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 712413251}
+  m_Follow: {fileID: 712413251}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -503,7 +503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167004165}
   m_LocalRotation: {x: -0.12314649, y: -0.8682916, z: 0.2681151, w: -0.39877176}
-  m_LocalPosition: {x: -62.64655, y: 56.381886, z: 53.819077}
+  m_LocalPosition: {x: -73.75807, y: 56.39189, z: 61.503178}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2137011826}
@@ -618,6 +618,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122450269963441953, guid: 9d3bf6650cf6eed45ac75427efb42fb6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3bf6650cf6eed45ac75427efb42fb6, type: 3}
@@ -1585,6 +1590,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 762591934583838231}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &712413251 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7979062769126257504, guid: 5f234c9806348684db47c59ab863fae4,
+    type: 3}
+  m_PrefabInstance: {fileID: 656604512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &714557908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 416390, guid: c76d2d3504ddb4847940a815cad04644,
@@ -1722,7 +1733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725336800}
   m_LocalRotation: {x: -0.12314649, y: -0.8682916, z: 0.2681151, w: -0.39877176}
-  m_LocalPosition: {x: -62.64655, y: 56.381886, z: 53.819077}
+  m_LocalPosition: {x: -73.75807, y: 56.39189, z: 61.503178}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
