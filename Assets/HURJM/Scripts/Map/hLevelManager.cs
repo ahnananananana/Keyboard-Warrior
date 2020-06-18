@@ -28,6 +28,7 @@ public class hLevelManager : MonoBehaviour
 
     [SerializeField]
     private hLevelData[] m_LevelDataList;
+    [SerializeField]
     private int m_CurLevel = 1;
 
     public int curLevel { get => m_CurLevel; set => m_CurLevel = value; }

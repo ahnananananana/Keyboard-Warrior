@@ -1065,9 +1065,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3031381733217966499}
   - component: {fileID: 3031381733229751389}
-  m_Layer: 0
+  - component: {fileID: 1325913059}
+  m_Layer: 11
   m_Name: Dragon
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1256,6 +1257,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -33.476685, y: 41.865738, z: 26.524048}
     m_Extent: {x: 774.87854, y: 299.23724, z: 584.7963}
   m_DirtyAABB: 0
+--- !u!64 &1325913059
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031381733218213793}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: -1
+  m_Mesh: {fileID: 4300000, guid: 79b50b34e44b5fd4db1cdc9535a3c86b, type: 3}
 --- !u!1 &3031381733218214395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1376,7 @@ GameObject:
   - component: {fileID: 3031381733119282010}
   - component: {fileID: 3031381733119282005}
   - component: {fileID: 3031381733119282004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DragonBoss1
   m_TagString: Monster
   m_Icon: {fileID: 0}
