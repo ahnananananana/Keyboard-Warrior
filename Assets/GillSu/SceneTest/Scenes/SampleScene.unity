@@ -1600,6 +1600,41 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1299990410}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1078320009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078320008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0c7a801e2a8094daf43454f9775ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_state: 1
+  m_ID: 0
+  m_CharName: 
+  m_MaxHP:
+    m_BaseValue: 0
+  m_MaxMP:
+    m_BaseValue: 0
+  m_CurrHP: 0
+  m_CurrMP: 0
+  m_Attack:
+    m_BaseValue: 0
+  m_Defense:
+    m_BaseValue: 0
+  m_Magic:
+    m_BaseValue: 0
+  m_Resistance:
+    m_BaseValue: 0
+  m_MoveSpeed:
+    m_BaseValue: 0
+  m_AttackSpeed:
+    m_BaseValue: 0
+  m_EXP: {fileID: 0}
+  m_Damage: 0
 --- !u!4 &1078320010 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400086, guid: a58154c350c4ccf47a6cdad03a8dca1a,

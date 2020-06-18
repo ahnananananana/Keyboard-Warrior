@@ -46,19 +46,21 @@ public class EnemyCltr : Monster
         PlayerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         points = GameObject.Find("SpawnPoints").GetComponentsInChildren<Transform>();
         anim = GetComponent<Animator>();
+
+        Character hpmax = GetComponent<Character>();
     }
 
     // Update is called once per frame
     void Update()
     {
         float dist = Vector3.Distance(tr.position, PlayerTr.position); // 플레이어 캐릭터와 몬스터의 거리를 확인
-            if (dist <= 1.0f)
+            if (dist <= 1.5f)
             {
                 isAttack = true;
                 anim.SetBool("isIdle", false);
 
             }
-            else if (dist <= 5.0f) // 플레이어와 몬스터의 거리가 5.0보다 가까울경우
+            else if (dist <= 50.0f) // 플레이어와 몬스터의 거리가 5.0보다 가까울경우
             {
                 isAttack = false;
             Quaternion rot = Quaternion.LookRotation(movePos - tr.position); //가야할 방향에서 현재 자기 자신의 위치를 연산
