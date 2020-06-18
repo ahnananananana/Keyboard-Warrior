@@ -1918,14 +1918,15 @@ MonoBehaviour:
   Sword_Obj: {fileID: 0}
   Arrow_Obj: {fileID: 0}
   Bullet_Obj: {fileID: 0}
-  SwordAtkBox: {fileID: 0}
+  SwordAtkBox: {fileID: 6519818893972005295, guid: 34173fb3928a39e498f32727fe638ee7,
+    type: 3}
   UsingWeaponTR: {fileID: 0}
   BowTR: {fileID: 2053017726262320300}
   GunTR: {fileID: 2020873884704258821}
   SwordTR: {fileID: 2020873884704258821}
-  ArrowMuzzleTR: {fileID: 0}
-  BulletMuzzleTR: {fileID: 0}
-  SwordAtkBoxTR: {fileID: 0}
+  ArrowMuzzleTR: {fileID: 3894910351530657436}
+  BulletMuzzleTR: {fileID: 6858592198993121693}
+  SwordAtkBoxTR: {fileID: 1600155490018731350}
   bLongDistAtk: 0
   m_RotSpeed: 400
   m_AttackRotSpeed: 1200
@@ -1939,9 +1940,9 @@ MonoBehaviour:
     m_Bits: 2048
   m_MainCamera: {fileID: 0}
   UsingAni: {fileID: 0}
-  BowAni: {fileID: 0}
-  GunAni: {fileID: 0}
-  SwordAni: {fileID: 0}
+  BowAni: {fileID: 9100000, guid: 69c06cc8c7f45a3478a901ef32afd05c, type: 2}
+  GunAni: {fileID: 9100000, guid: 4db10980cdfe3b04b8da55dca9670b8f, type: 2}
+  SwordAni: {fileID: 9100000, guid: f3f0ace2cb0b70e499f594f2831f849a, type: 2}
   proj: {fileID: 0}
 --- !u!65 &1877481398189747913
 BoxCollider:
