@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Enemy
   - Monster
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -19,10 +20,10 @@ TagManager:
   - 
   - 
   - Player
-  - Ground
+  - PlayerForStat
   - PostProcessing
   - Monster
-  - PlayerForStat
+  - Ground
   - 
   - 
   - 
