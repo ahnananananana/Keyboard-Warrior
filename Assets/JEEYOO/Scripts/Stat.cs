@@ -12,7 +12,6 @@ public class Stat
     public event DelVoid changeEvent;
     //m_BaseValue는 스텟의 기본값. 이 값을 기반으로 모든 버프/아이템으로 인한 증감이 계산됨.
     public float m_BaseValue;
-    private float m_BaseIncrease = 1.2f;
 
     //버프가 적용된 값을 받아올 때는 m_CurrentValue를 가져오면 됨(모든 버프가 계산 된 값을 복사해온 값)
     //CalculateValue는 버프를 합산하는 함수
@@ -138,8 +137,8 @@ public class Stat
         return (float)Math.Round(finalValue, 2);
     }
 
-    public void IncreaseBaseValue()
+    public void IncreaseBaseValue(float increase)
     {
-        m_BaseValue *= m_BaseIncrease;
+        m_BaseValue *= increase;
     }
 }

@@ -13,7 +13,8 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_MainData.ItemData[(int)ITEMID.IRONSWORD].Equip(player);
+        Debug.Log(monster.m_CurrHP);
+        m_MainData.ItemData[(int)SWORDID.BROADSWORD].Equip(player);
     }
 
     // Update is called once per frame
@@ -22,8 +23,11 @@ public class Test : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.m_Attack.IncreaseBaseValue();
-            Debug.Log(player.m_Attack.m_BaseValue);
+            
+            player.DealDamage(monster);
+            Debug.Log(player.m_Attack.m_CurrentValue);
+            Debug.Log(monster.m_CurrHP);
+            Debug.Log(player.m_EXP.m_Level);
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
