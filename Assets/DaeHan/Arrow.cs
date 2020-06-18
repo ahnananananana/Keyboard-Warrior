@@ -11,13 +11,16 @@ public class Arrow : MonoBehaviour
 
     public STATE state = STATE.CREATE;
 
-    public GameObject Obj_CrashEffect;
+    public GameObject ArrowObj;
+    public GameObject CrashEffect;
 
-    public float fDeleteArrowTime = 2.0f;
-    public float fMoveSpeed = 30.0f;
+    public float DeleteArrowTime = 2.0f;
+    public float MoveSpeed = 1.0f;
     public float fTime = 0.0f;
 
-    Vector3 V3_Dir;
+    Vector3 m_Dir;
+
+    public Effect effect;
 
     public LayerMask CastLayer;
 
@@ -67,9 +70,11 @@ public class Arrow : MonoBehaviour
 
     public void MoveToTarget()
     {
+        this.transform.parent = null;
+
         Vector3 pos = transform.localPosition;
-        float delta = fMoveSpeed * Time.smoothDeltaTime;
-        Vector3 target = pos + V3_Dir * delta;
+        float delta = MoveSpeed * Time.smoothDeltaTime;
+        Vector3 target = pos + m_Dir * delta;
 
         Ray ray = new Ray();
         ray.origin = pos;
@@ -87,7 +92,7 @@ public class Arrow : MonoBehaviour
             transform.localPosition = target;
 
             fTime += Time.smoothDeltaTime;
-            if (fTime >= fDeleteArrowTime)
+            if (fTime >= DeleteArrowTime)
             {
                 ChangeState(STATE.OUT);
             }
@@ -96,25 +101,25 @@ public class Arrow : MonoBehaviour
 
     void CreateEffect()
     {
-        GameObject obj = Instantiate(Obj_CrashEffect);
+        GameObject obj = Instantiate(CrashEffect);
         obj.transform.position = this.transform.position;
         obj.transform.rotation = this.transform.rotation;
     }
 
     void Out()
     {
-        Debug.Log("투사체 삭제");
-        Destroy(gameObject);
+        fTime = 0.0f;
+        Destroy(ArrowObj);
     }
 
     void Damage()
     {
-        Debug.Log("투사체 명중");
+        Debug.Log("타격");
     }
 
     public void OnFire(Vector3 dir)
     {
-        V3_Dir = dir;
+        m_Dir = dir;
         ChangeState(STATE.MOVE);
     }
 }
