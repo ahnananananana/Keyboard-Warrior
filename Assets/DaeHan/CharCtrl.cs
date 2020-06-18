@@ -27,24 +27,29 @@ public class CharCtrl : MonoBehaviour
     }
     protected MoveData m_MoveData;
 
-    //--------삭제할 오브젝트 변수-------//
     public GameObject Weapon_Obj;
     public GameObject Bow_Obj;
     public GameObject Gun_Obj;
     public GameObject Sword_Obj;
     public GameObject Arrow_Obj;
-    //-----------------------------------//
+    public GameObject Bullet_Obj;
+    public GameObject SwordAtkBox;
 
     public Transform UsingWeaponTR;
     public Transform BowTR;
     public Transform GunTR;
     public Transform SwordTR;
     public Transform ArrowMuzzleTR;
+    public Transform BulletMuzzleTR;
+    public Transform SwordAtkBoxTR;
 
-    public LayerMask m_GroundLayer;
-    public LayerMask m_MonsterLayer;
-    public float m_MoveSmooth = 10.0f;
-    public float m_RotSmooth = 10.0f;
+    public bool bLongDistAtk = false;
+
+    public string Using_String = "Bow";
+    public string Bow_Sting = "Bow";
+    public string Gun_Sting = "Gun";
+    public string Sword_Sting = "Sword";
+
     public float m_RotSpeed = 400f;
     public float m_AttackRotSpeed = 1200f;
     public float m_RollSpeed = 10.0f;
@@ -53,9 +58,17 @@ public class CharCtrl : MonoBehaviour
     public float m_MoveSpeed = 10.0f;
     //-------------------------------//
 
+    public LayerMask m_GroundLayer;
+    public LayerMask m_MonsterLayer;
+
     public Camera m_MainCamera;
     public Animator Ani;
-    public Arrow arrow;
+    public Projectile proj;
+
+    private void Start()
+    {
+        ChangeWeapon(WEAPONTYPE.BOW, Bow_Obj);
+    }
 
     private void Update()   
     {
@@ -71,7 +84,7 @@ public class CharCtrl : MonoBehaviour
                 ChangeState(STATE.IDLE);
                 break;
             case STATE.IDLE:
-                if(Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
                 {
                     Picking(true);
                 }
@@ -141,7 +154,7 @@ public class CharCtrl : MonoBehaviour
                 Ani.SetTrigger("Roll");
                 break;
             case STATE.ATTACK:
-                BowAttack();
+                Attack();
                 break;
             case STATE.DEAD:
                 Dead();
@@ -156,19 +169,25 @@ public class CharCtrl : MonoBehaviour
         switch (w)
         {
             case WEAPONTYPE.BOW:
+                bLongDistAtk = true;
                 UsingWeaponTR = BowTR;
+                Using_String = Bow_Sting;
                 break;
             case WEAPONTYPE.GUN:
+                bLongDistAtk = true;
                 UsingWeaponTR = GunTR;
+                Using_String = Gun_Sting;
                 break;
             case WEAPONTYPE.SWORD:
+                bLongDistAtk = false;
                 UsingWeaponTR = SwordTR;
+                Using_String = Sword_Sting;
                 break;
         }
         Weapon_Obj = Instantiate(weapon) as GameObject;
         Weapon_Obj.transform.SetParent(UsingWeaponTR);
         Weapon_Obj.transform.position = UsingWeaponTR.position;
-        Weapon_Obj.transform.localRotation = UsingWeaponTR.localRotation;
+        Weapon_Obj.transform.rotation = UsingWeaponTR.rotation;
     }
 
     protected void Roll()
@@ -180,34 +199,36 @@ public class CharCtrl : MonoBehaviour
         transform.localPosition = target;
     }
 
-    protected void BowAttack()
+    protected void Attack()
     {
         ReadyMove();
-        Ani.Play("Idle");
-        Ani.SetTrigger("BowAttack");
-    }
-
-    protected void SwordAttack()
-    {
-        ReadyMove();
-        Ani.Play("Idle");
-        Ani.SetTrigger("SwordAttack");
-    }
-
-    protected void GunAttack()
-    {
-        ReadyMove();
-        Ani.Play("Idle");
-        Ani.SetTrigger("GunAttack");
+        //Ani.Play("Idle");
+        Ani.SetTrigger(Using_String + "Attack");
     }
 
     protected void BowFire()
     {
         GameObject obj = Instantiate(Arrow_Obj) as GameObject;
-        arrow = obj.GetComponent<Arrow>();
+        proj = obj.GetComponent<Projectile>();
         obj.transform.position = ArrowMuzzleTR.position;
         obj.transform.rotation = this.transform.rotation;
-        arrow.OnFire(ArrowMuzzleTR.forward);
+        proj.OnFire(ArrowMuzzleTR.forward);
+    }
+
+    protected void GunFire()
+    {
+        GameObject obj = Instantiate(Bullet_Obj) as GameObject;
+        proj = obj.GetComponent<Projectile>();
+        obj.transform.position = BulletMuzzleTR.position;
+        obj.transform.rotation = this.transform.rotation;
+        proj.OnFire(BulletMuzzleTR.forward);
+    }
+
+    protected void SwordAttack()
+    {
+        GameObject obj = Instantiate(SwordAtkBox);
+        obj.transform.position = SwordAtkBoxTR.transform.position;
+        obj.transform.rotation = SwordAtkBoxTR.transform.rotation;
     }
 
     protected void Dead()
@@ -231,8 +252,8 @@ public class CharCtrl : MonoBehaviour
 
             Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
 
-            if (Ani.GetBool("Walk") == true) 
-                Ani.SetBool("Walk", false);
+            if (Ani.GetBool(Using_String + "Walk") == true)
+                Ani.SetBool(Using_String + "Walk", false);
 
             ChangeState(STATE.ATTACK);
         }
@@ -246,7 +267,7 @@ public class CharCtrl : MonoBehaviour
 
             Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
 
-            switch(LeftControl)
+            switch (LeftControl)
             {
                 case false:
                     ChangeState(STATE.WALK);
@@ -277,7 +298,7 @@ public class CharCtrl : MonoBehaviour
 
     protected void Moving(bool bPlayer)
     {
-        Ani.SetBool("Walk", true);
+        Ani.SetBool(Using_String + "Walk", true);
 
         if (bPlayer) // 이동중일 때 다른 입력을 받기 위함
         {
@@ -287,7 +308,7 @@ public class CharCtrl : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    Ani.SetBool("Walk", false);
+                    Ani.SetBool(Using_String + "Walk", false);
                     Picking(true);
                 }
                 else
@@ -296,8 +317,8 @@ public class CharCtrl : MonoBehaviour
 
             if (Input.GetKey(KeyCode.D))
             {
+                Ani.SetBool(Using_String + "Walk", false);
                 Ani.Play("Idle"); // 구르기 시전 딜레이때문에 넣음
-                Ani.SetBool("Walk", false);
                 ChangeState(STATE.ROLL);
             }
         }
@@ -315,7 +336,7 @@ public class CharCtrl : MonoBehaviour
 
         if (m_MoveData.MoveDist < 0.01f)
         {
-            Ani.SetBool("Walk", false);
+            Ani.SetBool(Using_String + "Walk", false);
             ChangeState(STATE.IDLE);
         }
     }
@@ -347,6 +368,14 @@ public class CharCtrl : MonoBehaviour
         }
 
         this.transform.Rotate(Vector3.up, delta);
+    }
+
+    private void OnTriggerEnter(Collider obj)
+    {
+        if (obj.tag == "AtkBox" && state == STATE.IDLE)
+        {
+            Ani.SetTrigger("Hit"); // 상체 애니메이션만 해야함
+        }
     }
 }
 

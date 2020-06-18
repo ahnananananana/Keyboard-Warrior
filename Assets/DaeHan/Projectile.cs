@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public enum STATE
     {
@@ -12,14 +12,15 @@ public class Arrow : MonoBehaviour
     public STATE state = STATE.CREATE;
 
     public GameObject Obj_CrashEffect;
+    public GameObject Obj_GunFireEffect;
+    public Collider CrashMonster;
+    public LayerMask Monster;
 
-    public float fDeleteArrowTime = 2.0f;
+    public float fDeleteProjTime = 2.0f;
     public float fMoveSpeed = 30.0f;
     public float fTime = 0.0f;
 
     Vector3 V3_Dir;
-
-    public LayerMask CastLayer;
 
     private void Update()
     {
@@ -28,7 +29,7 @@ public class Arrow : MonoBehaviour
 
     void StateProcess()
     {
-        switch(state)
+        switch (state)
         {
             case STATE.CREATE:
                 break;
@@ -53,6 +54,12 @@ public class Arrow : MonoBehaviour
             case STATE.CREATE:
                 break;
             case STATE.MOVE:
+                if (Obj_GunFireEffect != null)
+                {
+                    GameObject obj = Instantiate(Obj_GunFireEffect);
+                    obj.transform.position = this.transform.position;
+                    obj.transform.rotation = this.transform.rotation;
+                }
                 break;
             case STATE.CRASH:
                 CreateEffect();
@@ -75,29 +82,29 @@ public class Arrow : MonoBehaviour
         ray.origin = pos;
         ray.direction = target - pos;
         ray.direction.Normalize();
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, delta, CastLayer)) // 충돌이 났을 때
+        /*if (Physics.Raycast(ray, out hit, delta, Monster)) // 충돌이 났을 때
         {
-            transform.localPosition = hit.point;
+            transform.position = hit.point;
             ChangeState(STATE.CRASH);
-        }
-        else
-        {
+        }*/
+        //else
+        //{
             transform.localPosition = target;
 
             fTime += Time.smoothDeltaTime;
-            if (fTime >= fDeleteArrowTime)
+            if (fTime >= fDeleteProjTime)
             {
                 ChangeState(STATE.OUT);
             }
-        }
+        //}
     }
 
     void CreateEffect()
     {
         GameObject obj = Instantiate(Obj_CrashEffect);
-        obj.transform.position = this.transform.position;
+        obj.transform.position = CrashMonster.transform.position;
         obj.transform.rotation = this.transform.rotation;
     }
 
@@ -107,14 +114,38 @@ public class Arrow : MonoBehaviour
         Destroy(gameObject);
     }
 
+
     void Damage()
     {
         Debug.Log("투사체 명중");
     }
 
+
+    /*public void Damage(Character defender)
+    {
+        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        if (defender.m_CurrHP <= 0)
+        {
+            defender.ChangeState(Character.STATE.DEAD);
+            defender.StateProcess();
+        }
+        Debug.Log("투사체 명중");
+    }*/
+ 
+    
+
     public void OnFire(Vector3 dir)
     {
         V3_Dir = dir;
         ChangeState(STATE.MOVE);
+    }
+
+    void OnTriggerEnter(Collider obj)
+    {
+        if (obj.tag == "Monster")
+        {
+            CrashMonster = obj;
+            ChangeState(STATE.CRASH);
+        }
     }
 }
