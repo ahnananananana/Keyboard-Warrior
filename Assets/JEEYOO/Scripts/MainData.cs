@@ -18,6 +18,21 @@ public enum SWORDID
 
 public class MainData
 {
+    private static MainData instance = null;
+
+    public static MainData mainData
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = new MainData();
+            }
+            return instance;
+        }
+    }
+
+
     public Item[] ItemData;
     public Buff[] BuffData;
     public Monster[] MonsterData;

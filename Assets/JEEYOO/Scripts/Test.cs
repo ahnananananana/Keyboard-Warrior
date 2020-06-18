@@ -6,15 +6,13 @@ public class jTest : MonoBehaviour
 {
     public Player player;
     public Monster monster;
-    private MainData m_MainData;
     
-    public Item[] allPrefabs;
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log(monster.m_CurrHP);
-        m_MainData.ItemData[(int)SWORDID.BROADSWORD].Equip(player);
+        MainData.mainData.ItemData[0].Equip(player);
     }
 
     // Update is called once per frame
@@ -31,22 +29,11 @@ public class jTest : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            allPrefabs = Resources.LoadAll<Item>("Prefabs");
-            for (int i = 0; i < allPrefabs.Length; i++)
-            {
-                Debug.Log(allPrefabs[i].m_ID);
-                Debug.Log(allPrefabs[i].m_ItemName);
-            }
-
-            Debug.Log(player.m_Attack.m_CurrentValue);
-            allPrefabs[0].Equip(player);
-            Debug.Log(player.m_Attack.m_CurrentValue);
+            
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            Debug.Log(player.m_Attack.m_CurrentValue);
-            allPrefabs[0].UnEquip(player);
-            Debug.Log(player.m_Attack.m_CurrentValue);
+            
         }
     }
 }
