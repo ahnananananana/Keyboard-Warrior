@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3993676584192790181}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,6 +213,8 @@ MonoBehaviour:
   fDeleteProjTime: 2
   fMoveSpeed: 80
   fTime: 0
+  character: {fileID: 2628945020013842487, guid: 3a1805b3fb76e514c8ed9ff43ed94cea,
+    type: 3}
 --- !u!54 &3993676584192790181
 Rigidbody:
   m_ObjectHideFlags: 0

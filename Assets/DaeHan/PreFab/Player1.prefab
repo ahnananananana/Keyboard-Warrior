@@ -1983,7 +1983,7 @@ MonoBehaviour:
   m_CurrHP: 0
   m_CurrMP: 0
   m_Attack:
-    m_BaseValue: 0
+    m_BaseValue: 150
   m_Defense:
     m_BaseValue: 0
   m_Magic:

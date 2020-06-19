@@ -63,6 +63,8 @@ public class CharCtrl : MonoBehaviour
     public RuntimeAnimatorController GunAni;
     public RuntimeAnimatorController SwordAni;
     public Projectile proj;
+    [SerializeField]
+    private Character player;
 
     private void Start()
     {
@@ -212,6 +214,7 @@ public class CharCtrl : MonoBehaviour
         proj = obj.GetComponent<Projectile>();
         obj.transform.position = ArrowMuzzleTR.position;
         obj.transform.rotation = this.transform.rotation;
+        proj.character = player;
         proj.OnFire(ArrowMuzzleTR.forward);
     }
 

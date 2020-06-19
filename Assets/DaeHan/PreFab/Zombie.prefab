@@ -1955,7 +1955,7 @@ MonoBehaviour:
     m_BaseValue: 100
   m_MaxMP:
     m_BaseValue: 0
-  m_CurrHP: 0
+  m_CurrHP: 100
   m_CurrMP: 0
   m_Attack:
     m_BaseValue: 0
@@ -1969,6 +1969,7 @@ MonoBehaviour:
     m_BaseValue: 0
   m_AttackSpeed:
     m_BaseValue: 0
+  m_EXP: {fileID: 0}
   m_Damage: 0
 --- !u!1 &8353653987550714592
 GameObject:

@@ -104,6 +104,8 @@ MonoBehaviour:
   fDeleteProjTime: 2
   fMoveSpeed: 30
   fTime: 0
+  character: {fileID: 2628945020013842487, guid: 3a1805b3fb76e514c8ed9ff43ed94cea,
+    type: 3}
 --- !u!65 &2406282401920799390
 BoxCollider:
   m_ObjectHideFlags: 0

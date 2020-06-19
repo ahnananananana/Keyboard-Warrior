@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
     public Experience m_EXP;
     public float m_Damage;
 
+
     private void Start()
     {
         m_CurrHP = m_MaxHP.m_CurrentValue;
@@ -51,12 +52,14 @@ public class Character : MonoBehaviour
 
     public void DealDamage(Character defender)
     {
+        Debug.Log(m_Damage);
+        
         m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
         defender.m_CurrHP -= m_Damage;
-        if (defender.m_CurrHP <= 0)
+        if (defender.m_CurrHP <= 0 && defender.m_state != STATE.DEAD)
         {
-            m_EXP.GetExp((Monster)defender);
-            deadEvent?.Invoke();
+            if(gameObject.tag.Equals("Player"))
+                m_EXP.GetExp((Monster)defender);
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
         }
@@ -75,6 +78,7 @@ public class Character : MonoBehaviour
             case STATE.ALIVE:
                 break;
             case STATE.DEAD:
+                //
                 break;
         }
     }
