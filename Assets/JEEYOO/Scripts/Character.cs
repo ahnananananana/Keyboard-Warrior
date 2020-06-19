@@ -33,7 +33,8 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        
+        m_CurrHP = m_MaxHP.m_CurrentValue;
+        m_CurrMP = m_MaxMP.m_CurrentValue;
     }
 
     public void IncreaseStatByLvUp()
